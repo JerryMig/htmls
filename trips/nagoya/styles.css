@@ -38,8 +38,8 @@ a {
 
 .site-header {
   background:
-    linear-gradient(120deg, rgba(23, 32, 42, 0.68), rgba(23, 32, 42, 0.24)),
-    url("assets/page4-image1.jpg") center 58% / cover;
+    linear-gradient(120deg, rgba(23, 32, 42, 0.7), rgba(23, 32, 42, 0.12)),
+    url("assets/nagoya-skyline.jpg") center 46% / cover;
   min-height: 54vh;
   display: flex;
   align-items: end;
@@ -83,39 +83,6 @@ h1 {
   max-width: 720px;
   margin: 18px 0 0;
   font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-}
-
-.header-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 26px;
-  flex-wrap: wrap;
-}
-
-.button {
-  appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.68);
-  color: #fff;
-  background: rgba(255, 255, 255, 0.14);
-  text-decoration: none;
-  font: inherit;
-  font-weight: 800;
-  padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  min-height: 44px;
-}
-
-.button:hover,
-.button:focus-visible {
-  background: rgba(255, 255, 255, 0.24);
-  outline: none;
-}
-
-.button-muted {
-  color: #17202a;
-  background: #fff;
-  border-color: #fff;
 }
 
 .day-nav {
@@ -460,7 +427,6 @@ footer {
   }
 
   .day-nav,
-  .header-actions,
   footer {
     display: none;
   }

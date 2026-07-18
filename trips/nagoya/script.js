@@ -1,10 +1,7 @@
-const printButton = document.querySelector("#print-page");
 const navLinks = Array.from(document.querySelectorAll(".day-nav a"));
 const sections = navLinks
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
-
-printButton?.addEventListener("click", () => window.print());
 
 const observer = new IntersectionObserver(
   (entries) => {
