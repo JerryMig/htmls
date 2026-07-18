@@ -54,7 +54,7 @@ a {
   background:
     linear-gradient(90deg, rgba(12, 12, 11, 0.9), rgba(12, 12, 11, 0.58) 44%, rgba(12, 12, 11, 0.2)),
     linear-gradient(0deg, rgba(15, 15, 14, 0.98), rgba(15, 15, 14, 0.08) 42%),
-    url("assets/nagoya-night-view.jpg") center 46% / cover;
+    url("https://jp.zekkeijapan.com/datas/images/2024/06/18/46124d846d94d73d0bbece538612204f743787c5.jpg") center 46% / cover;
   border-bottom: 1px solid var(--line);
 }
 
