@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f5f0e8">
-  <title>神戶一天半｜長輩友善行程</title>
+  <title>神戶一天半｜省力行程</title>
   <style>
     :root {
       --ink: #202624;
@@ -190,6 +190,14 @@
     }
     .place-link::after { content: "↗"; color: var(--port); font-size: .82rem; }
     .place-link:focus-visible, .place-link:hover { color: var(--port); }
+    .group-title {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      font-size: 1.02rem;
+      font-weight: 850;
+      line-height: 1.3;
+    }
     .tag {
       flex: 0 0 auto;
       padding: 4px 8px;
@@ -216,6 +224,40 @@
       background: #faf7f1;
       color: #625e56;
       font-size: .79rem;
+    }
+
+    .kitano-stops {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+    }
+    .kitano-detail {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 11px 12px;
+      border: 1px solid #e7dfd3;
+      border-radius: 13px;
+      background: #faf7f1;
+    }
+    .kitano-detail time {
+      padding-top: 2px;
+      color: var(--port);
+      font-size: .72rem;
+      font-weight: 900;
+    }
+    .kitano-detail a {
+      color: var(--ink);
+      font-size: .9rem;
+      font-weight: 850;
+      text-decoration-color: rgba(14,111,118,.42);
+      text-underline-offset: 3px;
+    }
+    .kitano-detail p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: .76rem;
     }
 
     .choice-wrap {
@@ -342,7 +384,7 @@
     <header class="hero">
       <p class="eyebrow">KOBE · 1.5 DAYS</p>
       <h1>神戶，一天半<br>慢慢走。</h1>
-      <p>5 位大人・2 位長輩｜以三宮為中心的省力路線</p>
+      <p>5 位大人｜以三宮為中心的省力路線</p>
       <div class="quick-facts" aria-label="行程特色">
         <span class="chip">🚕 純移動以計程車優先</span>
         <span class="chip">⛰️ 少爬坡</span>
@@ -414,19 +456,19 @@
           </article>
           <article class="stop">
             <div class="stop-time">09:25</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=北野町広場%20神戸" target="_blank" rel="noopener">北野町廣場</a><span class="tag">START</span></div><p class="stop-desc">早餐後搭計程車直上精華區，由高處往低處走，減少爬坡。</p><div class="meta"><span>🚕 目的地：北野町広場</span></div></div></div>
-          </article>
-          <article class="stop">
-            <div class="stop-time">09:30</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=風見鶏の館" target="_blank" rel="noopener">風見鶏之館</a><span class="tag">25 MIN</span></div><p class="stop-desc">北野精華館舍，建議進館參觀。</p><div class="meta"><span>🎫 營業與休館日待日期確認</span></div></div></div>
-          </article>
-          <article class="stop">
-            <div class="stop-time">09:55</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=萌黄の館%20神戸" target="_blank" rel="noopener">萌黃之館</a><span class="tag">10 MIN</span></div><p class="stop-desc">以外觀拍照為主，有時間與體力才進館。</p></div></div>
-          </article>
-          <article class="stop">
-            <div class="stop-time">10:15</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=スターバックスコーヒー%20神戸北野異人館店" target="_blank" rel="noopener">Starbucks 神戶北野異人館店</a><span class="tag">25 MIN</span></div><p class="stop-desc">歷史洋館「北野物語館」，喝飲料、看看館內即可。</p></div></div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><span class="group-title">北野異人館精華</span><span class="tag">75 MIN</span></div>
+                <p class="stop-desc">搭計程車直上北野町廣場，再由高處往低處走，減少爬坡。</p>
+                <div class="meta"><span>🚕 目的地：北野町広場</span><span>🚶 精華路線</span></div>
+                <div class="kitano-stops">
+                  <div class="kitano-detail"><time>09:25</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=北野町広場%20神戸" target="_blank" rel="noopener">北野町廣場 ↗</a><p>精華區起點，由高處開始往下走。</p></div></div>
+                  <div class="kitano-detail"><time>09:30</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=風見鶏の館" target="_blank" rel="noopener">風見鶏之館 ↗</a><p>建議進館；營業與休館日待日期確認。</p></div></div>
+                  <div class="kitano-detail"><time>09:55</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=萌黄の館%20神戸" target="_blank" rel="noopener">萌黃之館 ↗</a><p>以外觀拍照為主，有時間與體力才進館。</p></div></div>
+                  <div class="kitano-detail"><time>10:15</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=スターバックスコーヒー%20神戸北野異人館店" target="_blank" rel="noopener">Starbucks 神戶北野異人館店 ↗</a><p>歷史洋館「北野物語館」，喝飲料、看看館內。</p></div></div>
+                </div>
+              </div>
+            </div>
           </article>
           <article class="stop">
             <div class="stop-time">10:50</div>
@@ -461,7 +503,7 @@
               <p>17:20 搭計程車，約 17:30–18:30 散步拍照。部分小吃店傍晚陸續關門，不宜太晚抵達。</p>
             </div>
             <div class="choice recommended">
-              <small>OPTION B · 長輩友善推薦</small>
+              <small>OPTION B · 省力推薦</small>
               <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸三宮センター街" target="_blank" rel="noopener">神戶三宮中心街 ↗</a></strong>
               <p>從飯店輕鬆步行，視體力再逛 <a href="https://www.google.com/maps/search/?api=1&amp;query=神戸阪急" target="_blank" rel="noopener">神戶阪急 ↗</a>。可隨時回飯店。</p>
             </div>
