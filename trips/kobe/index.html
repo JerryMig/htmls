@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>神戶一天半｜長輩友善行程</title>
+  <style>
+    :root {
+      --ink: #202624;
+      --muted: #66706c;
+      --paper: #f5f0e8;
+      --card: #fffdf9;
+      --line: #ded7ca;
+      --port: #0e6f76;
+      --port-soft: #dcefee;
+      --wine: #8b3d49;
+      --wine-soft: #f4e2e4;
+      --gold: #a06b20;
+      --shadow: 0 10px 26px rgba(42, 48, 45, .08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(14,111,118,.10), transparent 34%),
+        radial-gradient(circle at 100% 20%, rgba(139,61,73,.08), transparent 32%),
+        var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    a { color: inherit; }
+
+    .app {
+      width: min(100%, 760px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding-bottom: calc(104px + env(safe-area-inset-bottom));
+    }
+
+    .hero { padding: 28px 20px 18px; }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--port);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-family: ui-serif, Georgia, "Noto Serif TC", serif;
+      font-size: clamp(2rem, 10vw, 3.7rem);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+    }
+    .hero p { margin: 12px 0 0; color: var(--muted); }
+    .quick-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .chip {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,253,249,.72);
+      color: #4f5955;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .day-nav-wrap {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      padding: 10px 16px;
+      backdrop-filter: blur(16px);
+      background: rgba(245,240,232,.84);
+      border-top: 1px solid rgba(222,215,202,.7);
+      border-bottom: 1px solid rgba(222,215,202,.8);
+    }
+    .day-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      padding: 5px;
+      border-radius: 15px;
+      background: #e9e2d7;
+    }
+    .day-tab {
+      min-height: 48px;
+      border: 0;
+      border-radius: 11px;
+      background: transparent;
+      color: #68706d;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .day-tab[aria-selected="true"] {
+      color: var(--ink);
+      background: var(--card);
+      box-shadow: 0 3px 12px rgba(42,48,45,.10);
+    }
+
+    main { padding: 18px 16px 0; }
+    .day-panel[hidden] { display: none; }
+    .day-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 4px 4px 18px;
+    }
+    .day-kicker { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .08em; }
+    h2 { margin: 2px 0 0; font-size: 1.48rem; line-height: 1.2; }
+    .day-duration { flex: 0 0 auto; color: var(--muted); font-size: .78rem; font-weight: 700; }
+
+    .notice {
+      margin: 0 0 18px;
+      padding: 14px 15px;
+      border: 1px solid #e3cda9;
+      border-radius: 16px;
+      background: #fff7e8;
+      color: #694c1d;
+      font-size: .88rem;
+    }
+    .notice strong { display: block; margin-bottom: 2px; }
+
+    .timeline { position: relative; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      bottom: 18px;
+      left: 31px;
+      width: 2px;
+      background: linear-gradient(var(--port), var(--wine));
+      opacity: .28;
+    }
+    .stop {
+      position: relative;
+      display: grid;
+      grid-template-columns: 48px minmax(0,1fr);
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+    .stop-time {
+      position: relative;
+      z-index: 1;
+      align-self: start;
+      padding-top: 15px;
+      color: var(--port);
+      background: var(--paper);
+      font-size: .76rem;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .stop-card {
+      overflow: hidden;
+      border: 1px solid rgba(222,215,202,.92);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .stop-main { padding: 16px 16px 14px; }
+    .stop-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .place-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 32px;
+      color: var(--ink);
+      font-weight: 850;
+      font-size: 1.02rem;
+      line-height: 1.3;
+      text-decoration-color: rgba(14,111,118,.4);
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 4px;
+    }
+    .place-link::after { content: "↗"; color: var(--port); font-size: .82rem; }
+    .place-link:focus-visible, .place-link:hover { color: var(--port); }
+    .tag {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--port-soft);
+      color: #0c6268;
+      font-size: .68rem;
+      font-weight: 850;
+    }
+    .tag.rest { color: #76404a; background: var(--wine-soft); }
+    .stop-desc { margin: 7px 0 0; color: var(--muted); font-size: .87rem; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-top: 10px;
+      color: #53605c;
+      font-size: .78rem;
+      font-weight: 650;
+    }
+    .stop-note {
+      padding: 11px 16px;
+      border-top: 1px solid #ece5da;
+      background: #faf7f1;
+      color: #625e56;
+      font-size: .79rem;
+    }
+
+    .choice-wrap {
+      margin: 24px 0 6px 60px;
+      padding: 17px;
+      border-radius: 22px;
+      color: white;
+      background: linear-gradient(135deg, #205e62, #173d45);
+      box-shadow: 0 15px 34px rgba(23,61,69,.18);
+    }
+    .choice-label { margin: 0; color: #bfe1df; font-size: .72rem; font-weight: 900; letter-spacing: .12em; }
+    .choice-wrap h3 { margin: 3px 0 6px; font-size: 1.2rem; }
+    .choice-wrap > p { margin: 0 0 14px; color: #d9e9e8; font-size: .83rem; }
+    .choice-grid { display: grid; gap: 10px; }
+    .choice {
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+    }
+    .choice.recommended { border-color: #e8ca8d; background: rgba(232,202,141,.12); }
+    .choice small { color: #c5d8d7; font-weight: 750; }
+    .choice strong { display: block; margin: 3px 0 5px; font-size: .97rem; }
+    .choice a { color: white; text-underline-offset: 3px; }
+    .choice p { margin: 0; color: #d8e6e5; font-size: .8rem; }
+
+    .section-title { margin: 30px 4px 12px; font-size: 1.12rem; }
+    .tips { display: grid; gap: 10px; }
+    .tip {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,253,249,.74);
+      font-size: .84rem;
+    }
+    .tip strong { display: block; margin-bottom: 3px; }
+
+    .taxi-fab {
+      position: fixed;
+      z-index: 30;
+      right: max(18px, calc((100vw - 760px)/2 + 18px));
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      min-height: 52px;
+      padding: 0 17px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: var(--wine);
+      box-shadow: 0 12px 28px rgba(93,39,48,.3);
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .sheet-backdrop {
+      position: fixed;
+      z-index: 40;
+      inset: 0;
+      border: 0;
+      background: rgba(15,21,19,.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+    .sheet {
+      position: fixed;
+      z-index: 41;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      max-height: 82vh;
+      overflow: auto;
+      padding: 10px 16px calc(22px + env(safe-area-inset-bottom));
+      border-radius: 24px 24px 0 0;
+      background: var(--card);
+      transform: translateY(105%);
+      transition: transform .25s ease;
+      box-shadow: 0 -16px 44px rgba(20,27,25,.2);
+    }
+    body.sheet-open { overflow: hidden; }
+    body.sheet-open .sheet-backdrop { opacity: 1; pointer-events: auto; }
+    body.sheet-open .sheet { transform: translateY(0); }
+    .grabber { width: 42px; height: 5px; margin: 0 auto 13px; border-radius: 99px; background: #d8d0c4; }
+    .sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .sheet h2 { margin: 0; font-size: 1.25rem; }
+    .close-sheet { width: 44px; height: 44px; border: 0; border-radius: 50%; background: #eee8de; cursor: pointer; }
+    .taxi-list { display: grid; gap: 9px; margin-top: 14px; }
+    .taxi-row {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 12px 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #faf7f1;
+    }
+    .taxi-row small { display: block; color: var(--muted); }
+    .taxi-row strong { display: block; margin-top: 2px; font-size: .9rem; }
+    .copy-btn {
+      min-width: 68px;
+      min-height: 44px;
+      border: 1px solid #cfc6b8;
+      border-radius: 12px;
+      color: var(--ink);
+      background: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .copy-btn.copied { color: white; border-color: var(--port); background: var(--port); }
+
+    footer { padding: 32px 20px 0; color: var(--muted); font-size: .75rem; text-align: center; }
+    @media (min-width: 640px) {
+      .hero { padding-top: 42px; }
+      .choice-grid { grid-template-columns: 1fr 1fr; }
+      .tips { grid-template-columns: 1fr 1fr; }
+      .sheet { left: 50%; width: min(620px, 100%); transform: translate(-50%, 105%); border-radius: 24px 24px 0 0; }
+      body.sheet-open .sheet { transform: translate(-50%, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <p class="eyebrow">KOBE · 1.5 DAYS</p>
+      <h1>神戶，一天半<br>慢慢走。</h1>
+      <p>5 位大人・2 位長輩｜以三宮為中心的省力路線</p>
+      <div class="quick-facts" aria-label="行程特色">
+        <span class="chip">🚕 純移動以計程車優先</span>
+        <span class="chip">⛰️ 少爬坡</span>
+        <span class="chip">📍 景點可開 Google Maps</span>
+      </div>
+    </header>
+
+    <div class="day-nav-wrap">
+      <div class="day-nav" role="tablist" aria-label="選擇行程日期">
+        <button class="day-tab" id="tab-day1" role="tab" aria-selected="true" aria-controls="day1">Day 1・港區</button>
+        <button class="day-tab" id="tab-day2" role="tab" aria-selected="false" aria-controls="day2">Day 2・北野</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1">
+        <div class="day-heading">
+          <div><p class="day-kicker">HALF DAY</p><h2>舊居留地・港景・夜景</h2></div>
+          <span class="day-duration">約 14:00–20:30</span>
+        </div>
+        <div class="notice"><strong>🌇 Port Tower 依日落調整</strong>建議在當日日落前 30–45 分鐘入塔；指定日期與入場時段須另行確認。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">14:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">Royal Park Canvas 出發</a><span class="tag">START</span></div><p class="stop-desc">放好行李後出發，5 人可直接搭計程車。</p><div class="meta"><span>🚕 約 10 分</span><span>目的地：大丸神戸店</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">14:10</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸旧居留地" target="_blank" rel="noopener">神戶舊居留地</a><span class="tag">60 MIN</span></div><p class="stop-desc">以大丸神戶店為下車點，欣賞洋風建築與街景。</p><div class="meta"><span>🚶 平坦散步</span><span>📷 建築街景</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">15:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=メリケンパーク" target="_blank" rel="noopener">Meriken Park</a><span class="tag">50 MIN</span></div><p class="stop-desc">從舊居留地搭短程計程車，保留體力給港邊。</p><div class="meta"><span>🚕 計程車推薦</span><span>🌊 港景</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">15:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=BE%20KOBE%20モニュメント%20メリケンパーク" target="_blank" rel="noopener">BE KOBE</a><span class="tag">PHOTO</span></div><p class="stop-desc">拍照後沿港邊慢慢走，不必繞完整個公園。</p></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">日落前</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ポートタワー" target="_blank" rel="noopener">Kobe Port Tower</a><span class="tag">SUNSET</span></div><p class="stop-desc">日落前 30–45 分鐘進塔，同時看白天、夕陽與亮燈。</p><div class="meta"><span>🎫 建議預約時段票</span><span>🛗 電梯登塔</span></div></div><div class="stop-note">實際日期確定後，再鎖定最佳入場時間與最後入場。</div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">晚上</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ハーバーランドumie%20モザイク" target="_blank" rel="noopener">MOSAIC・Harborland</a><span class="tag">DINNER</span></div><p class="stop-desc">沿港邊步行約 15–20 分鐘。先逛商店，再吃晚餐與看夜景。</p><div class="meta"><span>🛍️ 商店通常較早關</span><span>🍽️ 晚餐</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">20:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">返回飯店</a><span class="tag rest">REST</span></div><p class="stop-desc">從 Harborland 搭計程車回三宮，不再增加步行量。</p></div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 1 提醒</h3>
+        <div class="tips"><div class="tip"><strong>Port Tower</strong>日期確定後查日落、指定票與最後入場。</div><div class="tip"><strong>MOSAIC</strong>想購物要先逛再吃，餐廳通常比商店晚關。</div></div>
+      </section>
+
+      <section class="day-panel" id="day2" role="tabpanel" aria-labelledby="tab-day2" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">FULL DAY</p><h2>北野・香草園・神戶牛</h2></div>
+          <span class="day-duration">約 08:20 起</span>
+        </div>
+        <div class="notice"><strong>🛏️ 最新安排：下午回飯店休息</strong>生田神社後回飯店休息兩小時；晚上依大家體力，在南京町與三宮購物之間二選一。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">08:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸にしむら珈琲店%20三宮店" target="_blank" rel="noopener">西村咖啡三宮店</a><span class="tag">40 MIN</span></div><p class="stop-desc">老咖啡店早餐。店舖 08:00 開門，但朝食セット 08:30–11:30。</p><div class="meta"><span>🚶 飯店步行</span><span>☕ 08:30 抵達</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">09:25</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=北野町広場%20神戸" target="_blank" rel="noopener">北野町廣場</a><span class="tag">START</span></div><p class="stop-desc">早餐後搭計程車直上精華區，由高處往低處走，減少爬坡。</p><div class="meta"><span>🚕 目的地：北野町広場</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">09:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=風見鶏の館" target="_blank" rel="noopener">風見鶏之館</a><span class="tag">25 MIN</span></div><p class="stop-desc">北野精華館舍，建議進館參觀。</p><div class="meta"><span>🎫 營業與休館日待日期確認</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">09:55</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=萌黄の館%20神戸" target="_blank" rel="noopener">萌黃之館</a><span class="tag">10 MIN</span></div><p class="stop-desc">以外觀拍照為主，有時間與體力才進館。</p></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">10:15</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=スターバックスコーヒー%20神戸北野異人館店" target="_blank" rel="noopener">Starbucks 神戶北野異人館店</a><span class="tag">25 MIN</span></div><p class="stop-desc">歷史洋館「北野物語館」，喝飲料、看看館內即可。</p></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">10:50</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸布引ハーブ園%20ロープウェイ%20ハーブ園山麓駅" target="_blank" rel="noopener">布引香草園山麓站</a><span class="tag">ROPEWAY</span></div><p class="stop-desc">從北野搭計程車，務必指定纜車「ハーブ園山麓駅」。</p><div class="meta"><span>🚡 纜車 09:30 起</span><span>🚕 短程移動</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">11:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸布引ハーブ園" target="_blank" rel="noopener">神戶布引香草園</a><span class="tag">60 MIN</span></div><p class="stop-desc">以山頂展望、花園與休息為主；回程仍搭纜車，不徒步下山。</p><div class="meta"><span>🌿 園區 10:00 起</span><span>🚶 少量步行</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">13:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ビフテキのカワムラ%20三宮本店" target="_blank" rel="noopener">Bifteck Kawamura 三宮本店</a><span class="tag">90 MIN</span></div><p class="stop-desc">5 人建議預約 13:00。若要正式吃神戶牛，菜單須明確標示「神戸ビーフ」。</p><div class="meta"><span>📅 務必預約</span><span>🥩 Kobe Beef</span></div></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">14:35</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=生田神社" target="_blank" rel="noopener">生田神社</a><span class="tag">35 MIN</span></div><p class="stop-desc">從餐廳步行前往。若要御守或御朱印，留意授與所受理時間。</p></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">15:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">返回飯店休息</a><span class="tag rest">120 MIN</span></div><p class="stop-desc">生田神社離飯店很近，步行或搭短程計程車；完整休息兩小時。</p><div class="meta"><span>🛏️ 15:20–17:20</span><span>🔋 恢復體力</span></div></div></div>
+          </article>
+        </div>
+
+        <section class="choice-wrap" aria-labelledby="evening-title">
+          <p class="choice-label">17:20 後 · 二選一</p>
+          <h3 id="evening-title">今晚看大家體力決定</h3>
+          <p>不必把兩條路線都排進去；休息後再現場選擇。</p>
+          <div class="choice-grid">
+            <div class="choice">
+              <small>OPTION A · 想看南京町</small>
+              <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=南京町%20長安門" target="_blank" rel="noopener">南京町・長安門 ↗</a></strong>
+              <p>17:20 搭計程車，約 17:30–18:30 散步拍照。部分小吃店傍晚陸續關門，不宜太晚抵達。</p>
+            </div>
+            <div class="choice recommended">
+              <small>OPTION B · 長輩友善推薦</small>
+              <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸三宮センター街" target="_blank" rel="noopener">神戶三宮中心街 ↗</a></strong>
+              <p>從飯店輕鬆步行，視體力再逛 <a href="https://www.google.com/maps/search/?api=1&amp;query=神戸阪急" target="_blank" rel="noopener">神戶阪急 ↗</a>。可隨時回飯店。</p>
+            </div>
+          </div>
+        </section>
+
+        <h3 class="section-title">Day 2 預約與時間</h3>
+        <div class="tips"><div class="tip"><strong>Kawamura</strong>5 人建議先訂 13:00，並確認選的是「神戸ビーフ」。</div><div class="tip"><strong>晚間購物</strong>百貨與商店關門時間依旅行日期、星期與樓層而異，出發前再確認。</div></div>
+      </section>
+    </main>
+
+    <footer>點擊任何有底線的景點名稱，即可用 Google Maps 開啟位置。</footer>
+  </div>
+
+  <button class="taxi-fab" id="openTaxi" type="button" aria-haspopup="dialog">🚕 計程車日文</button>
+  <button class="sheet-backdrop" id="sheetBackdrop" type="button" tabindex="-1" aria-label="關閉計程車資訊"></button>
+  <section class="sheet" id="taxiSheet" role="dialog" aria-modal="true" aria-labelledby="taxiTitle" aria-hidden="true">
+    <div class="grabber"></div>
+    <div class="sheet-head"><div><p class="eyebrow">SHOW THE DRIVER</p><h2 id="taxiTitle">計程車目的地</h2></div><button class="close-sheet" id="closeTaxi" type="button" aria-label="關閉">✕</button></div>
+    <div class="taxi-list">
+      <div class="taxi-row"><div><small>舊居留地下車點</small><strong>大丸神戸店までお願いします。</strong></div><button class="copy-btn" data-copy="大丸神戸店までお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>Meriken Park</small><strong>メリケンパークまでお願いします。</strong></div><button class="copy-btn" data-copy="メリケンパークまでお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>Kobe Port Tower</small><strong>神戸ポートタワーまでお願いします。</strong></div><button class="copy-btn" data-copy="神戸ポートタワーまでお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>北野精華區</small><strong>北野町広場までお願いします。</strong></div><button class="copy-btn" data-copy="北野町広場までお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>香草園纜車入口</small><strong>神戸布引ハーブ園 ロープウェイ ハーブ園山麓駅までお願いします。</strong></div><button class="copy-btn" data-copy="神戸布引ハーブ園 ロープウェイ ハーブ園山麓駅までお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>Kawamura 三宮本店</small><strong>ビフテキのカワムラ 三宮本店までお願いします。</strong></div><button class="copy-btn" data-copy="ビフテキのカワムラ 三宮本店までお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>南京町東側入口</small><strong>南京町の長安門までお願いします。</strong></div><button class="copy-btn" data-copy="南京町の長安門までお願いします。">複製</button></div>
+      <div class="taxi-row"><div><small>飯店</small><strong>ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。">複製</button></div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = [...document.querySelectorAll('.day-tab')];
+    const panels = [...document.querySelectorAll('.day-panel')];
+    tabs.forEach((tab, index) => tab.addEventListener('click', () => {
+      tabs.forEach((item, i) => item.setAttribute('aria-selected', String(i === index)));
+      panels.forEach((panel, i) => panel.hidden = i !== index);
+      window.scrollTo({ top: document.querySelector('.day-nav-wrap').offsetTop, behavior: 'smooth' });
+    }));
+
+    const openTaxi = document.getElementById('openTaxi');
+    const closeTaxi = document.getElementById('closeTaxi');
+    const sheetBackdrop = document.getElementById('sheetBackdrop');
+    const taxiSheet = document.getElementById('taxiSheet');
+    function setSheet(open) {
+      document.body.classList.toggle('sheet-open', open);
+      taxiSheet.setAttribute('aria-hidden', String(!open));
+      if (open) closeTaxi.focus(); else openTaxi.focus();
+    }
+    openTaxi.addEventListener('click', () => setSheet(true));
+    closeTaxi.addEventListener('click', () => setSheet(false));
+    sheetBackdrop.addEventListener('click', () => setSheet(false));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && document.body.classList.contains('sheet-open')) setSheet(false); });
+
+    document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+      const text = button.dataset.copy;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+      }
+      const original = button.textContent;
+      button.textContent = '已複製';
+      button.classList.add('copied');
+      setTimeout(() => { button.textContent = original; button.classList.remove('copied'); }, 1500);
+    }));
+  </script>
+</body>
+</html>
