@@ -116,6 +116,11 @@
       background: var(--card);
       box-shadow: 0 7px 20px rgba(0,0,0,.24), inset 0 0 0 1px rgba(107,213,218,.12);
     }
+    .day-tab:disabled {
+      color: #596461;
+      cursor: not-allowed;
+      opacity: .7;
+    }
 
     main { padding: 18px 16px 0; }
     .day-panel[hidden] { display: none; }
@@ -400,13 +405,13 @@
 
     <div class="day-nav-wrap">
       <div class="day-nav" role="tablist" aria-label="選擇行程日期">
-        <button class="day-tab" id="tab-day1" role="tab" aria-selected="true" aria-controls="day1">Day 1・港區</button>
-        <button class="day-tab" id="tab-day2" role="tab" aria-selected="false" aria-controls="day2">Day 2・北野</button>
+        <button class="day-tab" id="tab-day1" role="tab" aria-selected="false" aria-controls="day1" aria-disabled="true" disabled>🔒 Day 1・港區</button>
+        <button class="day-tab" id="tab-day2" role="tab" aria-selected="true" aria-controls="day2">Day 2・北野</button>
       </div>
     </div>
 
     <main>
-      <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1">
+      <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1" hidden>
         <div class="day-heading">
           <div><p class="day-kicker">HALF DAY</p><h2>舊居留地・港景・夜景</h2></div>
           <span class="day-duration">約 14:00–20:30</span>
@@ -448,7 +453,7 @@
         <div class="tips"><div class="tip"><strong>Port Tower</strong>日期確定後查日落、指定票與最後入場。</div><div class="tip"><strong>MOSAIC</strong>想購物要先逛再吃，餐廳通常比商店晚關。</div></div>
       </section>
 
-      <section class="day-panel" id="day2" role="tabpanel" aria-labelledby="tab-day2" hidden>
+      <section class="day-panel" id="day2" role="tabpanel" aria-labelledby="tab-day2">
         <div class="day-heading">
           <div><p class="day-kicker">FULL DAY</p><h2>北野・香草園・神戶牛</h2></div>
           <span class="day-duration">約 08:20 起</span>
