@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#091014">
-  <title>神戶一天半｜省力行程</title>
+  <title>神戶到姬路｜三日行程</title>
   <style>
     :root {
       color-scheme: dark;
@@ -95,7 +95,7 @@
     }
     .day-nav {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 7px;
       padding: 5px;
       border-radius: 15px;
@@ -111,15 +111,18 @@
       font-weight: 800;
       cursor: pointer;
     }
+    .day-tab span { display: block; line-height: 1.15; }
+    .day-tab small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .68rem;
+      font-weight: 750;
+    }
     .day-tab[aria-selected="true"] {
       color: var(--ink);
       background: var(--card);
       box-shadow: 0 7px 20px rgba(0,0,0,.24), inset 0 0 0 1px rgba(107,213,218,.12);
-    }
-    .day-tab:disabled {
-      color: #596461;
-      cursor: not-allowed;
-      opacity: .7;
     }
 
     main { padding: 18px 16px 0; }
@@ -235,6 +238,26 @@
       color: #aeb9b5;
       font-size: .79rem;
     }
+    .bus-options {
+      display: grid;
+      gap: 7px;
+      margin-top: 13px;
+    }
+    .bus-option {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 11px;
+      border: 1px solid #2b3b41;
+      border-radius: 12px;
+      background: #0f191d;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+    .bus-option span:last-child { text-align: right; }
+    .bus-option b { color: var(--gold); font-size: .72rem; }
+    .stop-note a { color: var(--port); text-underline-offset: 3px; }
 
     .kitano-stops {
       display: grid;
@@ -268,6 +291,21 @@
       margin: 3px 0 0;
       color: var(--muted);
       font-size: .76rem;
+    }
+    .harbor-stops .kitano-detail {
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 11px;
+    }
+    .harbor-stops .kitano-detail time {
+      width: 100%;
+      padding: 4px 7px;
+      border: 1px solid rgba(107,213,218,.24);
+      border-radius: 7px;
+      background: rgba(107,213,218,.07);
+      font-size: .66rem;
+      line-height: 1.35;
+      letter-spacing: .02em;
+      text-align: center;
     }
 
     .choice-wrap {
@@ -356,7 +394,7 @@
     .close-sheet { width: 44px; height: 44px; border: 1px solid #34444a; border-radius: 50%; color: var(--ink); background: #1b282d; cursor: pointer; }
     .taxi-day-tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 6px;
       margin-top: 16px;
       padding: 5px;
@@ -418,9 +456,9 @@
 <body>
   <div class="app">
     <header class="hero">
-      <p class="eyebrow">KOBE · 1.5 DAYS</p>
-      <h1>神戶，一天半<br>慢慢走。</h1>
-      <p>5 位大人｜以三宮為中心的省力路線</p>
+      <p class="eyebrow">KOBE → HIMEJI · 3 DAYS</p>
+      <h1>神戶到姬路<br>慢慢走。</h1>
+      <p>5 位大人｜神戶兩日＋姬路移動日</p>
       <div class="quick-facts" aria-label="行程特色">
         <span class="chip">🚕 純移動以計程車優先</span>
         <span class="chip">⛰️ 少爬坡</span>
@@ -430,57 +468,95 @@
 
     <div class="day-nav-wrap">
       <div class="day-nav" role="tablist" aria-label="選擇行程日期">
-        <button class="day-tab" id="tab-day1" role="tab" aria-selected="false" aria-controls="day1" aria-disabled="true" disabled>🔒 Day 1・港區</button>
-        <button class="day-tab" id="tab-day2" role="tab" aria-selected="true" aria-controls="day2">Day 2・北野</button>
+        <button class="day-tab" id="tab-day1" role="tab" aria-selected="true" aria-controls="day1"><span>Day 1・港區</span><small>9/3 星期四</small></button>
+        <button class="day-tab" id="tab-day2" role="tab" aria-selected="false" aria-controls="day2"><span>Day 2・北野</span><small>9/4 星期五</small></button>
+        <button class="day-tab" id="tab-day3" role="tab" aria-selected="false" aria-controls="day3"><span>Day 3・姬路</span><small>9/5 星期六</small></button>
       </div>
     </div>
 
     <main>
-      <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1" hidden>
+      <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1">
         <div class="day-heading">
-          <div><p class="day-kicker">HALF DAY</p><h2>舊居留地・港景・夜景</h2></div>
-          <span class="day-duration">約 14:00–20:30</span>
+          <div><p class="day-kicker">2026/9/3 星期四 · ARRIVAL DAY</p><h2>抵達神戶・港景・夜景</h2></div>
+          <span class="day-duration">約 12:10–21:15・加碼至 22:15</span>
         </div>
-        <div class="notice"><strong>🌇 Port Tower 依日落調整</strong>建議在當日日落前 30–45 分鐘入塔；指定日期與入場時段須另行確認。</div>
+        <div class="notice"><strong>✈️ BR132 預計 12:10 抵達關西機場</strong>以搭上 13:40 利木津巴士為理想節奏；抵達飯店後保留完整一小時入住、整理與休息。</div>
 
         <div class="timeline">
           <article class="stop">
-            <div class="stop-time">14:00</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">Royal Park Canvas 出發</a><span class="tag">START</span></div><p class="stop-desc">放好行李後出發，5 人可直接搭計程車。</p><div class="meta"><span>🚕 約 10 分</span><span>目的地：大丸神戸店</span></div></div></div>
+            <div class="stop-time">12:10</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kansai%20International%20Airport%20Terminal%201" target="_blank" rel="noopener">BR132 抵達關西機場</a><span class="tag">ARRIVAL</span></div><p class="stop-desc">預定抵達第一航廈；入境、領行李與海關預留約 60–80 分鐘。</p><div class="meta"><span>🛬 預計 12:10 抵達</span><span>🧳 目標 13:20–13:30 完成</span></div></div></div>
           </article>
           <article class="stop">
-            <div class="stop-time">14:10</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸旧居留地" target="_blank" rel="noopener">神戶舊居留地</a><span class="tag">60 MIN</span></div><p class="stop-desc">以大丸神戶店為下車點，欣賞洋風建築與街景。</p><div class="meta"><span>🚶 平坦散步</span><span>📷 建築街景</span></div></div></div>
+            <div class="stop-time">13:40</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Kansai%20Airport%20Terminal%201%20Limousine%20Bus%20Stop%206" target="_blank" rel="noopener">利木津巴士前往神戶三宮</a><span class="tag">65 MIN</span></div>
+                <p class="stop-desc">第一航廈 1 樓 6 號乘車處上車，直達神戶三宮；成人單程 ¥2,200。</p>
+                <div class="bus-options" aria-label="機場巴士班次選項">
+                  <div class="bus-option"><span>13:40 關西機場</span><b>推薦</b><span>14:45 三宮</span></div>
+                  <div class="bus-option"><span>14:00 關西機場</span><b>備選</b><span>15:05 三宮</span></div>
+                  <div class="bus-option"><span>14:15 關西機場</span><b>備選</b><span>15:20 三宮</span></div>
+                  <div class="bus-option"><span>14:35 關西機場</span><b>備選</b><span>15:40 三宮</span></div>
+                </div>
+              </div>
+              <div class="stop-note">班次與票價以當日公告為準；出發前查看 <a href="https://www.kate.co.jp/en/timetable/detail/KB" target="_blank" rel="noopener">官方時刻表 ↗</a>。</div>
+            </div>
           </article>
           <article class="stop">
-            <div class="stop-time">15:30</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=メリケンパーク" target="_blank" rel="noopener">Meriken Park</a><span class="tag">50 MIN</span></div><p class="stop-desc">從舊居留地搭短程計程車，保留體力給港邊。</p><div class="meta"><span>🚕 計程車推薦</span><span>🌊 港景</span></div></div></div>
+            <div class="stop-time">15:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">飯店入住・休息</a><span class="tag rest">60 MIN</span></div><p class="stop-desc">以搭乘 13:40 巴士估算，約 15:00 抵達飯店；入住、整理行李並休息一小時再出門。</p><div class="meta"><span>🛏️ 約 15:00–16:00</span><span>🕐 若搭後續班次，整段順延</span></div></div></div>
           </article>
           <article class="stop">
-            <div class="stop-time">15:45</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=BE%20KOBE%20モニュメント%20メリケンパーク" target="_blank" rel="noopener">BE KOBE</a><span class="tag">PHOTO</span></div><p class="stop-desc">拍照後沿港邊慢慢走，不必繞完整個公園。</p></div></div>
+            <div class="stop-time">16:10</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ハーバーランドumie%20モザイク" target="_blank" rel="noopener">MOSAIC・Harborland</a><span class="tag">HARBOR</span></div>
+                <p class="stop-desc">16:00 從飯店搭計程車直接前往。MOSAIC 與 umie 都在 Harborland；Sofmap、UNIQLO 位於 umie NORTH MALL。</p>
+                <div class="meta"><span>🚕 約 10–15 分</span><span>🕐 約 16:10–17:40</span></div>
+                <div class="kitano-stops harbor-stops">
+                  <div class="kitano-detail"><time>umie NORTH MALL 6F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=ソフマップ%20神戸ハーバーランド店" target="_blank" rel="noopener">Sofmap／Kojima ↗</a><p>有指定電器可優先前往。</p></div></div>
+                  <div class="kitano-detail"><time>umie NORTH MALL 3F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=ユニクロ%20神戸ハーバーランドumie店" target="_blank" rel="noopener">UNIQLO ↗</a><p>與 Sofmap 在同一館。</p></div></div>
+                  <div class="kitano-detail"><time>umie NORTH MALL 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=3COINS%2Bplus%20神戸ハーバーランドumie店" target="_blank" rel="noopener">3COINS ↗</a><p>可與其他店舖一起順逛。</p></div></div>
+                  <div class="kitano-detail"><time>umie NORTH MALL 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=GLOBAL%20WORK%20神戸ハーバーランドumie店" target="_blank" rel="noopener">GLOBAL WORK ↗</a><p>可依當天時間彈性停留。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸ハーバーランドumie%20モザイク" target="_blank" rel="noopener">MOSAIC ↗</a><p>港景商店與步道；17:40 左右沿海邊前往 Port Tower。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Harbor%20Bread%20Cafe%20神戸" target="_blank" rel="noopener">Harbor Bread Cafe ↗</a><p>鹹麵包最適合稍微果腹。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Calbee%2B%20神戸ハーバーランドumie" target="_blank" rel="noopener">Calbee+ ↗</a><p>現做薯條／Potarico，適合多人分食。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=観音屋%20ハーバーランド" target="_blank" rel="noopener">觀音屋 ↗</a><p>神戶名物熱起司蛋糕。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=六甲牧場カフェ%20神戸ハーバーランド" target="_blank" rel="noopener">六甲牧場 Cafe ↗</a><p>六甲牛乳霜淇淋。以上點心擇一即可。</p></div></div>
+                </div>
+              </div>
+            </div>
           </article>
           <article class="stop">
-            <div class="stop-time">日落前</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ポートタワー" target="_blank" rel="noopener">Kobe Port Tower</a><span class="tag">SUNSET</span></div><p class="stop-desc">日落前 30–45 分鐘進塔，同時看白天、夕陽與亮燈。</p><div class="meta"><span>🎫 建議預約時段票</span><span>🛗 電梯登塔</span></div></div><div class="stop-note">實際日期確定後，再鎖定最佳入場時間與最後入場。</div></div>
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ポートタワー" target="_blank" rel="noopener">Kobe Port Tower</a><span class="tag">SUNSET</span></div><p class="stop-desc">從 MOSAIC 沿港邊步行約 15–20 分鐘；建議預約 18:00 時段，日落約 18:23。</p><div class="meta"><span>🎫 建議預約時段票</span><span>🌇 18:00–18:50</span></div></div><div class="stop-note">最終仍以 9/3 官方售票時段、營業時間與最後入場公告為準。</div></div>
           </article>
           <article class="stop">
-            <div class="stop-time">晚上</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸ハーバーランドumie%20モザイク" target="_blank" rel="noopener">MOSAIC・Harborland</a><span class="tag">DINNER</span></div><p class="stop-desc">沿港邊步行約 15–20 分鐘。先逛商店，再吃晚餐與看夜景。</p><div class="meta"><span>🛍️ 商店通常較早關</span><span>🍽️ 晚餐</span></div></div></div>
+            <div class="stop-time">19:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=BE%20KOBE%20モニュメント%20メリケンパーク" target="_blank" rel="noopener">BE KOBE</a><span class="tag">PHOTO</span></div><p class="stop-desc">Port Tower 後沿 Meriken Park 前往，拍攝亮燈後的港景與紀念照；19:15 左右搭計程車前往晚餐。</p><div class="meta"><span>🚶 約 5–10 分</span><span>📷 19:00–19:15</span></div></div></div>
           </article>
           <article class="stop">
-            <div class="stop-time">20:30</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">返回飯店</a><span class="tag rest">REST</span></div><p class="stop-desc">從 Harborland 搭計程車回三宮，不再增加步行量。</p></div></div>
+            <div class="stop-time">19:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=洋食クアトロ%20神戸元町" target="_blank" rel="noopener">洋食 Quattro</a><span class="tag">DINNER</span></div><p class="stop-desc">從 BE KOBE 搭計程車約 5–10 分鐘。神戶日式洋食，招牌為可樂餅、炸牛排與漢堡排。</p><div class="meta"><span>⭐ Tabelog 3.73／1,101 則</span><span>📅 5 人建議預約</span></div></div><div class="stop-note">星期四晚餐 17:30–22:00、L.O. 21:00；餐點售完可能提早結束。查看 <a href="https://tabelog.com/hyogo/A2801/A280102/28035325/" target="_blank" rel="noopener">Tabelog 店家頁面 ↗</a>；資料為 2026/8/16 查詢。</div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">21:15</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">返回飯店</a><span class="tag rest">REST</span></div><p class="stop-desc">晚餐後從元町搭計程車回三宮。</p></div></div>
+          </article>
+          <article class="stop">
+            <div class="stop-time">21:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ドン・キホーテ%20三宮店" target="_blank" rel="noopener">唐吉訶德三宮店</a><span class="tag rest">OPTIONAL</span></div><p class="stop-desc">回飯店後若還有體力，再步行前往逛逛；不想出門可直接取消，不影響主要行程。</p><div class="meta"><span>🚶 飯店步行約 3–5 分</span><span>🕐 約 21:30–22:15</span><span>🌙 24 小時營業</span></div></div></div>
           </article>
         </div>
 
         <h3 class="section-title">Day 1 提醒</h3>
-        <div class="tips"><div class="tip"><strong>Port Tower</strong>日期確定後查日落、指定票與最後入場。</div><div class="tip"><strong>MOSAIC</strong>想購物要先逛再吃，餐廳通常比商店晚關。</div></div>
+        <div class="tips"><div class="tip"><strong>🌇 Port Tower</strong>9/3 神戶日落約 18:23，建議預約 18:00。若搭到 14:35 之後的巴士，縮短 Harborland 停留時間，優先保留 Port Tower 與晚餐預約。</div><div class="tip"><strong>洋食 Quattro</strong>5 人建議預約 19:30，21:00 最後點餐；Harborland 點心約 16:30 擇一即可。</div><div class="tip"><strong>🌙 回飯店後加碼</strong>唐吉訶德為可選行程；先回飯店休息，再依當晚狀況決定是否前往。</div></div>
       </section>
 
-      <section class="day-panel" id="day2" role="tabpanel" aria-labelledby="tab-day2">
+      <section class="day-panel" id="day2" role="tabpanel" aria-labelledby="tab-day2" hidden>
         <div class="day-heading">
-          <div><p class="day-kicker">FULL DAY</p><h2>北野・香草園・神戶牛</h2></div>
+          <div><p class="day-kicker">2026/9/4 星期五 · FULL DAY</p><h2>北野・香草園・神戶牛</h2></div>
           <span class="day-duration">約 08:20 起</span>
         </div>
         <div class="notice"><strong>🛏️ 最新安排：下午回飯店休息</strong>生田神社後回飯店休息兩小時；晚上依大家體力，在南京町與三宮購物之間二選一。</div>
@@ -549,6 +625,56 @@
         <h3 class="section-title">Day 2 預約與時間</h3>
         <div class="tips"><div class="tip"><strong>Kawamura</strong>5 人建議先訂 13:00，並確認選的是「神戸ビーフ」。</div><div class="tip"><strong>晚間購物</strong>百貨與商店關門時間依旅行日期、星期與樓層而異，出發前再確認。</div></div>
       </section>
+
+      <section class="day-panel" id="day3" role="tabpanel" aria-labelledby="tab-day3" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/5 星期六 · TRANSFER DAY</p><h2>神戶三宮 → 姬路</h2></div>
+          <span class="day-duration">14:00–16:00 出發選項</span>
+        </div>
+        <div class="notice"><strong>🚆 Day 3 目前只安排移動</strong>住宿為 Hotel Monterey Himeji；抵達後的姬路行程暫時不排。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">08:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">飯店早餐</a><span class="tag">BREAKFAST</span></div><p class="stop-desc">早上 8 點在 The Royal Park Canvas Kobe Sannomiya 吃早餐。</p><div class="meta"><span>🍳 08:00</span><span>🏨 飯店內</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">出發前</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅%20西口" target="_blank" rel="noopener">飯店 → JR 三ノ宮站</a><span class="tag">WALK</span></div><p class="stop-desc">從 The Royal Park Canvas Kobe Sannomiya 步行前往 JR 三ノ宮站；帶行李建議預留約 10–15 分鐘。</p><div class="meta"><span>🚶 約 6–10 分鐘</span><span>🎫 IC 卡可直接搭乘</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14–16</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅" target="_blank" rel="noopener">JR 三ノ宮站 → JR 姬路站</a><span class="tag">新快速</span></div>
+                <p class="stop-desc">搭 JR 神戶線新快速，往姬路方向直達，不用轉車。以下為 9/5 星期六下午 2–4 點的出發選項。</p>
+                <div class="meta"><span>🚆 約 40 分鐘</span><span>💴 IC ¥960／人</span></div>
+                <div class="bus-options" aria-label="三ノ宮到姬路新快速班次選項">
+                  <div class="bus-option"><span>14:07 三ノ宮</span><b>直達</b><span>14:47 姬路</span></div>
+                  <div class="bus-option"><span>14:22 三ノ宮</span><b>直達</b><span>15:02 姬路</span></div>
+                  <div class="bus-option"><span>14:37 三ノ宮</span><b>直達</b><span>15:17 姬路</span></div>
+                  <div class="bus-option"><span>14:52 三ノ宮</span><b>直達</b><span>15:32 姬路</span></div>
+                  <div class="bus-option"><span>15:07 三ノ宮</span><b>直達</b><span>15:47 姬路</span></div>
+                  <div class="bus-option"><span>15:22 三ノ宮</span><b>直達</b><span>16:02 姬路</span></div>
+                  <div class="bus-option"><span>15:37 三ノ宮</span><b>直達</b><span>16:17 姬路</span></div>
+                  <div class="bus-option"><span>15:52 三ノ宮</span><b>直達</b><span>16:32 姬路</span></div>
+                </div>
+              </div>
+              <div class="stop-note">星期六時刻與票價依 2026/9/5 查詢結果整理；搭車前仍請查看 <a href="https://transit.yahoo.co.jp/search/result?from=%E4%B8%89%E3%83%8E%E5%AE%AE%EF%BC%88%EF%BC%AA%EF%BC%B2%EF%BC%89&amp;to=%E5%A7%AB%E8%B7%AF&amp;y=2026&amp;m=09&amp;d=05&amp;hh=14&amp;m1=0&amp;m2=0&amp;type=1&amp;ticket=ic" target="_blank" rel="noopener">最新路線資訊 ↗</a> 與站內月台顯示。</div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">抵達後</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Monterey%20Himeji" target="_blank" rel="noopener">Hotel Monterey Himeji</a><span class="tag rest">HOTEL</span></div><p class="stop-desc">飯店與 JR 姬路站相連；從東口方向前往，抵達後先辦理入住。</p><div class="meta"><span>🏨 ホテルモントレ姫路</span><span>📍 JR 姬路站東口方向</span></div></div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 3 提醒</h3>
+        <div class="tips"><div class="tip"><strong>🚆 搭車方向</strong>選擇 JR 神戶線「新快速」，確認列車會直達姬路；實際月台以當日站內顯示為準。</div><div class="tip"><strong>📌 目前安排範圍</strong>只列神戶三宮到姬路飯店的交通，其他行程之後再安排。</div></div>
+      </section>
     </main>
 
     <footer>點擊任何有底線的景點名稱，即可用 Google Maps 開啟位置。</footer>
@@ -560,24 +686,30 @@
     <div class="grabber"></div>
     <div class="sheet-head"><div><p class="eyebrow">SHOW THE DRIVER</p><h2 id="taxiTitle">計程車目的地</h2></div><button class="close-sheet" id="closeTaxi" type="button" aria-label="關閉">✕</button></div>
     <div class="taxi-day-tabs" role="tablist" aria-label="選擇計程車目的地日期">
-      <button class="taxi-day-tab" id="taxi-tab-day1" type="button" role="tab" aria-selected="false" aria-controls="taxi-day1">Day 1・港區</button>
-      <button class="taxi-day-tab" id="taxi-tab-day2" type="button" role="tab" aria-selected="true" aria-controls="taxi-day2">Day 2・北野</button>
+      <button class="taxi-day-tab" id="taxi-tab-day1" type="button" role="tab" aria-selected="true" aria-controls="taxi-day1">Day 1・9/3</button>
+      <button class="taxi-day-tab" id="taxi-tab-day2" type="button" role="tab" aria-selected="false" aria-controls="taxi-day2">Day 2・9/4</button>
+      <button class="taxi-day-tab" id="taxi-tab-day3" type="button" role="tab" aria-selected="false" aria-controls="taxi-day3">Day 3・9/5</button>
     </div>
-    <div class="taxi-day-panel" id="taxi-day1" role="tabpanel" aria-labelledby="taxi-tab-day1" hidden>
+    <div class="taxi-day-panel" id="taxi-day1" role="tabpanel" aria-labelledby="taxi-tab-day1">
       <div class="taxi-list">
-        <div class="taxi-row"><div><small>舊居留地下車點</small><strong>大丸神戸店までお願いします。</strong></div><button class="copy-btn" data-copy="大丸神戸店までお願いします。">複製</button></div>
-        <div class="taxi-row"><div><small>Meriken Park</small><strong>メリケンパークまでお願いします。</strong></div><button class="copy-btn" data-copy="メリケンパークまでお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>Harborland・umie NORTH MALL</small><strong>神戸ハーバーランドumieのノースモールまでお願いします。</strong></div><button class="copy-btn" data-copy="神戸ハーバーランドumieのノースモールまでお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>Kobe Port Tower</small><strong>神戸ポートタワーまでお願いします。</strong></div><button class="copy-btn" data-copy="神戸ポートタワーまでお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>洋食 Quattro</small><strong>洋食クアトロまでお願いします。</strong></div><button class="copy-btn" data-copy="洋食クアトロまでお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>返回飯店</small><strong>ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。">複製</button></div>
       </div>
     </div>
-    <div class="taxi-day-panel" id="taxi-day2" role="tabpanel" aria-labelledby="taxi-tab-day2">
+    <div class="taxi-day-panel" id="taxi-day2" role="tabpanel" aria-labelledby="taxi-tab-day2" hidden>
       <div class="taxi-list">
         <div class="taxi-row"><div><small>北野精華區</small><strong>北野町広場までお願いします。</strong></div><button class="copy-btn" data-copy="北野町広場までお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>香草園纜車入口</small><strong>神戸布引ハーブ園 ロープウェイ ハーブ園山麓駅までお願いします。</strong></div><button class="copy-btn" data-copy="神戸布引ハーブ園 ロープウェイ ハーブ園山麓駅までお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>Kawamura 三宮本店</small><strong>ビフテキのカワムラ 三宮本店までお願いします。</strong></div><button class="copy-btn" data-copy="ビフテキのカワムラ 三宮本店までお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>南京町東側入口</small><strong>南京町の長安門までお願いします。</strong></div><button class="copy-btn" data-copy="南京町の長安門までお願いします。">複製</button></div>
         <div class="taxi-row"><div><small>返回飯店</small><strong>ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day3" role="tabpanel" aria-labelledby="taxi-tab-day3" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>Hotel Monterey Himeji</small><strong>ホテルモントレ姫路までお願いします。</strong></div><button class="copy-btn" data-copy="ホテルモントレ姫路までお願いします。">複製</button></div>
       </div>
     </div>
   </section>
@@ -606,7 +738,7 @@
       document.body.classList.toggle('sheet-open', open);
       taxiSheet.setAttribute('aria-hidden', String(!open));
       if (open) {
-        const selectedDay = document.querySelector('.day-tab[aria-selected="true"]').id === 'tab-day1' ? 'taxi-day1' : 'taxi-day2';
+        const selectedDay = 'taxi-' + document.querySelector('.day-tab[aria-selected="true"]').getAttribute('aria-controls');
         selectTaxiDay(selectedDay);
         closeTaxi.focus();
       } else {
