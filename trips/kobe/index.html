@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#091014">
-  <title>神戶到姬路｜三日行程</title>
+  <link rel="icon" href="data:,">
+  <title>關西慢慢走｜八日行程</title>
   <style>
     :root {
       color-scheme: dark;
@@ -94,15 +95,36 @@
       border-bottom: 1px solid rgba(73,92,98,.46);
     }
     .day-nav {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
       gap: 7px;
       padding: 5px;
       border-radius: 15px;
       background: #0d171b;
       border: 1px solid #253238;
     }
+    .day-nav-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin: 6px 2px 0;
+      color: #8fbec0;
+      font-size: .7rem;
+      font-weight: 750;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .day-nav-hint span {
+      color: var(--port);
+      font-size: .9rem;
+      line-height: 1;
+    }
     .day-tab {
+      flex: 1 0 116px;
+      scroll-snap-align: start;
       min-height: 48px;
       border: 0;
       border-radius: 11px;
@@ -316,6 +338,7 @@
       background: linear-gradient(145deg, #173d42, #10282e 52%, #1b202b);
       box-shadow: 0 18px 42px rgba(0,0,0,.32), inset 0 0 0 1px rgba(107,213,218,.14);
     }
+    .choice-wrap.split-choice { margin: 14px 0 0; }
     .choice-label { margin: 0; color: #a8e1e1; font-size: .72rem; font-weight: 900; letter-spacing: .12em; }
     .choice-wrap h3 { margin: 3px 0 6px; font-size: 1.2rem; }
     .choice-wrap > p { margin: 0 0 14px; color: #d9e9e8; font-size: .83rem; }
@@ -331,6 +354,57 @@
     .choice strong { display: block; margin: 3px 0 5px; font-size: .97rem; }
     .choice a { color: white; text-underline-offset: 3px; }
     .choice p { margin: 0; color: #d8e6e5; font-size: .8rem; }
+    .dinner-options {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .dinner-options-label {
+      color: #a8e1e1;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .dinner-option {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 13px;
+      background: rgba(5,17,20,.28);
+    }
+    .dinner-option-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .dinner-option-name {
+      min-width: 0;
+      font-size: .88rem;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
+    .dinner-option-name::after { content: " ↗"; color: var(--port); font-size: .72rem; }
+    .dinner-pick {
+      flex: 0 0 auto;
+      padding: 3px 7px;
+      border-radius: 999px;
+      color: #102023;
+      background: var(--gold);
+      font-size: .62rem;
+      font-weight: 900;
+    }
+    .dinner-option p { margin-top: 4px; color: #d8e6e5; font-size: .75rem; }
+    .dinner-hours { color: #b9cdca !important; }
+    .tabelog-link {
+      display: inline-block;
+      margin-top: 5px;
+      color: var(--port) !important;
+      font-size: .72rem;
+      font-weight: 800;
+    }
 
     .section-title { margin: 30px 4px 12px; font-size: 1.12rem; }
     .tips { display: grid; gap: 10px; }
@@ -393,8 +467,10 @@
     .sheet h2 { margin: 0; font-size: 1.25rem; }
     .close-sheet { width: 44px; height: 44px; border: 1px solid #34444a; border-radius: 50%; color: var(--ink); background: #1b282d; cursor: pointer; }
     .taxi-day-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x proximity;
       gap: 6px;
       margin-top: 16px;
       padding: 5px;
@@ -403,6 +479,8 @@
       background: #0d171b;
     }
     .taxi-day-tab {
+      flex: 1 0 94px;
+      scroll-snap-align: start;
       min-height: 44px;
       border: 0;
       border-radius: 10px;
@@ -416,6 +494,7 @@
       background: #1b292e;
       box-shadow: inset 0 0 0 1px rgba(107,213,218,.18), 0 6px 16px rgba(0,0,0,.22);
     }
+    .day-nav::-webkit-scrollbar, .taxi-day-tabs::-webkit-scrollbar { display: none; }
     .taxi-day-panel[hidden] { display: none; }
     .taxi-list { display: grid; gap: 9px; margin-top: 10px; }
     .taxi-row {
@@ -443,6 +522,7 @@
     .copy-btn.copied { color: #071316; border-color: var(--port); background: var(--port); }
 
     footer { padding: 32px 20px 0; color: var(--muted); font-size: .75rem; text-align: center; }
+    .rating-note { margin: 0 20px 14px; color: var(--muted); font-size: .75rem; line-height: 1.5; }
     @media (min-width: 640px) {
       .hero { padding-top: 42px; }
       .choice-grid { grid-template-columns: 1fr 1fr; }
@@ -456,9 +536,9 @@
 <body>
   <div class="app">
     <header class="hero">
-      <p class="eyebrow">KOBE → HIMEJI · 3 DAYS</p>
-      <h1>神戶到姬路<br>慢慢走。</h1>
-      <p>5 位大人｜神戶兩日＋姬路移動日</p>
+      <p class="eyebrow">KOBE → HIMEJI → KYOTO · 8 DAYS</p>
+      <h1>關西<br>慢慢走。</h1>
+      <p>神戶兩日＋姬路一晚＋京都五日</p>
       <div class="quick-facts" aria-label="行程特色">
         <span class="chip">🚕 純移動以計程車優先</span>
         <span class="chip">⛰️ 少爬坡</span>
@@ -467,14 +547,21 @@
     </header>
 
     <div class="day-nav-wrap">
-      <div class="day-nav" role="tablist" aria-label="選擇行程日期">
+      <div class="day-nav" role="tablist" aria-label="選擇行程日期" aria-describedby="day-nav-hint">
         <button class="day-tab" id="tab-day1" role="tab" aria-selected="true" aria-controls="day1"><span>Day 1・港區</span><small>9/3 星期四</small></button>
         <button class="day-tab" id="tab-day2" role="tab" aria-selected="false" aria-controls="day2"><span>Day 2・北野</span><small>9/4 星期五</small></button>
         <button class="day-tab" id="tab-day3" role="tab" aria-selected="false" aria-controls="day3"><span>Day 3・姬路</span><small>9/5 星期六</small></button>
+        <button class="day-tab" id="tab-day4" role="tab" aria-selected="false" aria-controls="day4"><span>Day 4・分流</span><small>9/6 星期日</small></button>
+        <button class="day-tab" id="tab-day5" role="tab" aria-selected="false" aria-controls="day5"><span>Day 5・東山</span><small>9/7 星期一</small></button>
+        <button class="day-tab" id="tab-day6" role="tab" aria-selected="false" aria-controls="day6"><span>Day 6・大阪</span><small>9/8 星期二</small></button>
+        <button class="day-tab" id="tab-day7" role="tab" aria-selected="false" aria-controls="day7"><span>Day 7・宇治</span><small>9/9 星期三</small></button>
+        <button class="day-tab" id="tab-day8" role="tab" aria-selected="false" aria-controls="day8"><span>Day 8・返程</span><small>9/10 星期四</small></button>
       </div>
+      <p class="day-nav-hint" id="day-nav-hint"><span aria-hidden="true">←</span>在上方日期列左右滑動，看不同天<span aria-hidden="true">→</span></p>
     </div>
 
     <main>
+      <p class="rating-note">Tabelog 評分與評論數為 2026/8/17–18 查詢，之後可能變動。</p>
       <section class="day-panel" id="day1" role="tabpanel" aria-labelledby="tab-day1">
         <div class="day-heading">
           <div><p class="day-kicker">2026/9/3 星期四 · ARRIVAL DAY</p><h2>抵達神戶・港景・夜景</h2></div>
@@ -520,10 +607,10 @@
                   <div class="kitano-detail"><time>umie NORTH MALL 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=3COINS%2Bplus%20神戸ハーバーランドumie店" target="_blank" rel="noopener">3COINS ↗</a><p>可與其他店舖一起順逛。</p></div></div>
                   <div class="kitano-detail"><time>umie NORTH MALL 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=GLOBAL%20WORK%20神戸ハーバーランドumie店" target="_blank" rel="noopener">GLOBAL WORK ↗</a><p>可依當天時間彈性停留。</p></div></div>
                   <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸ハーバーランドumie%20モザイク" target="_blank" rel="noopener">MOSAIC ↗</a><p>港景商店與步道；17:40 左右沿海邊前往 Port Tower。</p></div></div>
-                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Harbor%20Bread%20Cafe%20神戸" target="_blank" rel="noopener">Harbor Bread Cafe ↗</a><p>鹹麵包最適合稍微果腹。</p></div></div>
-                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Calbee%2B%20神戸ハーバーランドumie" target="_blank" rel="noopener">Calbee+ ↗</a><p>現做薯條／Potarico，適合多人分食。</p></div></div>
-                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=観音屋%20ハーバーランド" target="_blank" rel="noopener">觀音屋 ↗</a><p>神戶名物熱起司蛋糕。</p></div></div>
-                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=六甲牧場カフェ%20神戸ハーバーランド" target="_blank" rel="noopener">六甲牧場 Cafe ↗</a><p>六甲牛乳霜淇淋。以上點心擇一即可。</p></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Harbor%20Bread%20Cafe%20神戸" target="_blank" rel="noopener">Harbor Bread Cafe ↗</a><p>鹹麵包最適合稍微果腹。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28063595/" target="_blank" rel="noopener">⭐ Tabelog 3.37／87 則 ↗</a></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 2F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=Calbee%2B%20神戸ハーバーランドumie" target="_blank" rel="noopener">Calbee+ ↗</a><p>現做薯條／Potarico，適合多人分食。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28042465/" target="_blank" rel="noopener">⭐ Tabelog 3.13／145 則 ↗</a></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=観音屋%20ハーバーランド" target="_blank" rel="noopener">觀音屋 ↗</a><p>神戶名物熱起司蛋糕。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28000698/" target="_blank" rel="noopener">⭐ Tabelog 3.30／321 則 ↗</a></div></div>
+                  <div class="kitano-detail"><time>MOSAIC 1F</time><div><a href="https://www.google.com/maps/search/?api=1&amp;query=六甲牧場カフェ%20神戸ハーバーランド" target="_blank" rel="noopener">六甲牧場 Cafe ↗</a><p>六甲牛乳霜淇淋。以上點心擇一即可。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28038242/" target="_blank" rel="noopener">⭐ Tabelog 3.33／113 則 ↗</a></div></div>
                 </div>
               </div>
             </div>
@@ -538,7 +625,35 @@
           </article>
           <article class="stop">
             <div class="stop-time">19:30</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=洋食クアトロ%20神戸元町" target="_blank" rel="noopener">洋食 Quattro</a><span class="tag">DINNER</span></div><p class="stop-desc">從 BE KOBE 搭計程車約 5–10 分鐘。神戶日式洋食，招牌為可樂餅、炸牛排與漢堡排。</p><div class="meta"><span>⭐ Tabelog 3.73／1,101 則</span><span>📅 5 人建議預約</span></div></div><div class="stop-note">星期四晚餐 17:30–22:00、L.O. 21:00；餐點售完可能提早結束。查看 <a href="https://tabelog.com/hyogo/A2801/A280102/28035325/" target="_blank" rel="noopener">Tabelog 店家頁面 ↗</a>；資料為 2026/8/16 查詢。</div></div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=洋食クアトロ%20神戸元町" target="_blank" rel="noopener">洋食 Quattro</a><span class="tag">DINNER</span></div>
+                <p class="stop-desc">從 BE KOBE 搭計程車約 5–10 分鐘。神戶日式洋食，招牌為可樂餅、炸牛排與漢堡排。</p>
+                <div class="meta"><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28035325/" target="_blank" rel="noopener">⭐ Tabelog 3.73／1,102 則 ↗</a><span>📅 5 人建議預約</span></div>
+                <div class="dinner-options" aria-label="洋食 Quattro 訂不到時的晚餐備選">
+                  <span class="dinner-options-label">QUATTRO 訂不到時 · 備選三間</span>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=洋食屋%20神戸デュシャン" target="_blank" rel="noopener">洋食屋 神戸デュシャン</a><span class="dinner-pick">可線上訂位</span></div>
+                    <p>燉煮漢堡排、炸牛排與神戶牛洋食；58 席。BE KOBE 搭計程車約 10–12 分鐘，餐後搭計程車約 8–10 分鐘回飯店。</p>
+                    <p class="dinner-hours">星期四 17:00–22:00，L.O. 21:00；5 人建議預約。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28002810/" target="_blank" rel="noopener">⭐ Tabelog 3.48／569 則 ↗</a> · <a class="tabelog-link" href="https://booking.ebica.jp/webrsv/plan_search/e014001305/11542" target="_blank" rel="noopener">線上訂位 ↗</a> · <a class="tabelog-link" href="http://www.kobe-duchamp.com/" target="_blank" rel="noopener">官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=欧風料理%20もん%20神戸" target="_blank" rel="noopener">欧風料理 もん</a><span class="dinner-pick">離飯店最近</span></div>
+                    <p>老字號洋食；炸牛排、蛋包飯與燉牛舌。從 BE KOBE 搭計程車約 11 分鐘，吃完步行約 3 分鐘（190 m）即可直接回飯店。</p>
+                    <p class="dinner-hours">星期四 11:00–20:45；170 席，可預約但未提供可靠的線上訂位，5 人建議請飯店代訂。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28000531/" target="_blank" rel="noopener">⭐ Tabelog 3.69／1,857 則 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=伊藤グリル%20神戸" target="_blank" rel="noopener">伊藤グリル</a><span class="dinner-pick">完全預約制</span></div>
+                    <p>神戶牛燉肉、燉牛舌、炸牛排與炭火牛排。BE KOBE 搭計程車約 6–8 分鐘，餐後搭計程車約 8–10 分鐘回飯店。</p>
+                    <p class="dinner-hours">星期四 17:30–21:00，料理 L.O. 20:00；晚餐只供套餐，¥6,600 起另加 10% 服務費，5 人務必預約。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28000847/" target="_blank" rel="noopener">⭐ Tabelog 3.67／479 則 ↗</a> · <a class="tabelog-link" href="https://yoyaku.tabelog.com/yoyaku/net_booking_form/index?rcd=28000847" target="_blank" rel="noopener">線上訂位 ↗</a> · <a class="tabelog-link" href="http://www.itogrill.com/" target="_blank" rel="noopener">官方網站 ↗</a>
+                  </div>
+                </div>
+              </div>
+              <div class="stop-note">星期四晚餐 17:30–22:00、L.O. 21:00；餐點售完可能提早結束。以上各店營業時間仍請在出發前確認是否臨時調整。</div>
+            </div>
           </article>
           <article class="stop">
             <div class="stop-time">21:15</div>
@@ -564,7 +679,7 @@
         <div class="timeline">
           <article class="stop">
             <div class="stop-time">08:30</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸にしむら珈琲店%20三宮店" target="_blank" rel="noopener">西村咖啡三宮店</a><span class="tag">40 MIN</span></div><p class="stop-desc">老咖啡店早餐。店舖 08:00 開門，但朝食セット 08:30–11:30。</p><div class="meta"><span>🚶 飯店步行</span><span>☕ 08:30 抵達</span></div></div></div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸にしむら珈琲店%20三宮店" target="_blank" rel="noopener">西村咖啡三宮店</a><span class="tag">40 MIN</span></div><p class="stop-desc">老咖啡店早餐。店舖 08:00 開門，但朝食セット 08:30–11:30。</p><div class="meta"><span>🚶 飯店步行</span><span>☕ 08:30 抵達</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28000172/" target="_blank" rel="noopener">⭐ Tabelog 3.47／950 則 ↗</a></div></div></div>
           </article>
           <article class="stop">
             <div class="stop-time">09:25</div>
@@ -591,12 +706,16 @@
             <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=神戸布引ハーブ園" target="_blank" rel="noopener">神戶布引香草園</a><span class="tag">60 MIN</span></div><p class="stop-desc">以山頂展望、花園與休息為主；回程仍搭纜車，不徒步下山。</p><div class="meta"><span>🌿 園區 10:00 起</span><span>🚶 少量步行</span></div></div></div>
           </article>
           <article class="stop">
+            <div class="stop-time">12:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=THE%20BAKE%20兵庫県神戸市中央区加納町2-3-12" target="_blank" rel="noopener">THE BAKE</a><span class="tag">OPTIONAL · 15 MIN</span></div><p class="stop-desc">香草園下山後的麵包店加碼；從山麓站步行約 9 分鐘／650m，店內停留 10–15 分鐘，最晚 12:45 離開，再步行約 8 分鐘／550m 前往 Kawamura。推薦ソーセージブリオッシュ、カンパーニュ、チーズバーガー；クロワッサン可能因濕度暫停供應。</p><div class="meta"><span>🥐 星期五 10:00–17:00、17:00–23:00（L.O. 22:30）</span><span>👥 5 人建議 1–2 人入店，其他人在外等候</span><span>⚠️ 不定休／售完即止；延誤就跳過</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28054318/" target="_blank" rel="noopener">⭐ Tabelog 3.58／392 則 ↗</a><a class="tabelog-link" href="https://www.instagram.com/thebake.boozys/" target="_blank" rel="noopener">出發前查看 Instagram ↗</a></div></div></div>
+          </article>
+          <article class="stop">
             <div class="stop-time">13:00</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ビフテキのカワムラ%20三宮本店" target="_blank" rel="noopener">Bifteck Kawamura 三宮本店</a><span class="tag">90 MIN</span></div><p class="stop-desc">5 人建議預約 13:00。若要正式吃神戶牛，菜單須明確標示「神戸ビーフ」。</p><div class="meta"><span>📅 務必預約</span><span>🥩 Kobe Beef</span></div></div></div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ビフテキのカワムラ%20三宮本店" target="_blank" rel="noopener">Bifteck Kawamura 三宮本店</a><span class="tag">90 MIN</span></div><p class="stop-desc">5 人建議預約 13:00。若要正式吃神戶牛，菜單須明確標示「神戸ビーフ」。</p><div class="meta"><span>📅 務必預約</span><span>🥩 Kobe Beef</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28002105/" target="_blank" rel="noopener">⭐ Tabelog 3.57／224 則 ↗</a></div></div></div>
           </article>
           <article class="stop">
             <div class="stop-time">14:35</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=生田神社" target="_blank" rel="noopener">生田神社</a><span class="tag">35 MIN</span></div><p class="stop-desc">從餐廳步行前往。若要御守或御朱印，留意授與所受理時間。</p></div></div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=生田神社" target="_blank" rel="noopener">生田神社</a><span class="tag">可能移到隔天 · 35 MIN</span></div><p class="stop-desc">從餐廳步行前往。若要御守或御朱印，留意授與所受理時間。</p></div></div>
           </article>
           <article class="stop">
             <div class="stop-time">15:20</div>
@@ -613,11 +732,70 @@
               <small>OPTION A · 想看南京町</small>
               <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=南京町%20長安門" target="_blank" rel="noopener">南京町・長安門 ↗</a></strong>
               <p>17:20 搭計程車，約 17:30–18:30 散步拍照。部分小吃店傍晚陸續關門，不宜太晚抵達。</p>
+              <div class="dinner-options" aria-label="南京町晚餐備選">
+                <span class="dinner-options-label">DINNER · 晚餐四選一</span>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=グリル一平%20元町店" target="_blank" rel="noopener">Grill Ippei 元町店</a><span class="dinner-pick">17:00 開門</span></div>
+                  <p>神戶洋食｜蛋包飯、牛排、可樂餅</p>
+                  <p class="dinner-hours">星期五 17:00–20:30，L.O. 20:00；星期三休息。平日晚餐可電話預約，但可預約組數有限，5 人建議先訂。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28056372/" target="_blank" rel="noopener">⭐ Tabelog 3.67／711 則 ↗</a>
+                  <a class="tabelog-link" href="https://grill-ippei.co.jp/shop/motomachi-higashi/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=楽関記%20神戸元町" target="_blank" rel="noopener">楽関記</a><span class="dinner-pick">時間最彈性</span></div>
+                  <p>中華・香港料理｜小籠包、香港小盤</p>
+                  <p class="dinner-hours">星期五 17:30–22:00，L.O. 21:30；星期二休息。可預約且人氣高，5 人強烈建議先訂。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28049146/" target="_blank" rel="noopener">⭐ Tabelog 3.75／1,273 則 ↗</a>
+                  <a class="tabelog-link" href="https://rakkanki.com/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=圓記%20神戸元町" target="_blank" rel="noopener">圓記</a><span class="dinner-pick">17:00 開門</span></div>
+                  <p>香港飲茶｜點心、粥品、蘿蔔糕</p>
+                  <p class="dinner-hours">星期五 17:00–20:30，L.O. 20:00、20:00 最終入店；星期一、二休息。可預約，5 人建議先訂。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28042596/" target="_blank" rel="noopener">⭐ Tabelog 3.75／622 則 ↗</a>
+                  <a class="tabelog-link" href="https://yunkee-kobe.com/info/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=伊藤グリル%20神戸元町" target="_blank" rel="noopener">伊藤グリル</a><span class="dinner-pick">完全預約制</span></div>
+                  <p>老字號神戶洋食｜牛排、燉牛肉</p>
+                  <p class="dinner-hours">星期五 17:30–21:00，料理 L.O. 20:00；星期二、三休息。晚餐完全預約制，訂座亦僅供套餐，5 人務必預約。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28000847/" target="_blank" rel="noopener">⭐ Tabelog 3.67／479 則 ↗</a>
+                  <a class="tabelog-link" href="http://www.itogrill.com/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                </div>
+              </div>
             </div>
             <div class="choice recommended">
               <small>OPTION B · 省力推薦</small>
               <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸三宮センター街" target="_blank" rel="noopener">神戶三宮中心街 ↗</a></strong>
               <p>從飯店輕鬆步行，視體力再逛 <a href="https://www.google.com/maps/search/?api=1&amp;query=神戸阪急" target="_blank" rel="noopener">神戶阪急 ↗</a>。可隨時回飯店。</p>
+              <div class="stop-note">中心街各店沒有統一關門時間。星期五少數店家約 19:00–19:30 開始關門，多數服飾、鞋包與一般雜貨約 20:00 關，部分藥妝、100 円與生活雜貨營業至 21:00；神戶阪急通常為 10:00–20:00（部分樓層、餐飲與專門店例外）。建議 17:30–18:00 抵達、19:30 前完成主要逛街，再安排晚餐；20:00 後以部分藥妝、生活雜貨與餐飲為主。營業時間可能臨時調整，可查看 <a href="https://kobe-sc.jp/shop/" target="_blank" rel="noopener">中心街官方店舖資訊 ↗</a>、<a href="https://www.hankyu-dept.co.jp/kobe/map/" target="_blank" rel="noopener">神戶阪急官方資訊 ↗</a>。</div>
+              <div class="dinner-options" aria-label="神戶三宮中心街晚餐選項">
+                <span class="dinner-options-label">DINNER · 四選一</span>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=播州地酒%20ひの%20神戸" target="_blank" rel="noopener">播州地酒 ひの</a><span class="dinner-pick">在地推薦</span></div>
+                  <p>兵庫居酒屋｜季節海鮮、播州料理、兵庫地酒</p>
+                  <p class="dinner-hours">星期五 18:00–22:00；星期日休息。5 人以上限點套餐，建議預約。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28023316/" target="_blank" rel="noopener">⭐ Tabelog 3.65／236 則 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=炭トリウオ%20神戸三宮" target="_blank" rel="noopener">炭トリウオ</a></div>
+                  <p>炭火燒鳥｜地雞串燒、鮮魚、烤蔬菜與小盤料理</p>
+                  <p class="dinner-hours">星期五 17:00–00:30；料理 L.O. 23:30、飲料 L.O. 00:00。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28021296/" target="_blank" rel="noopener">⭐ Tabelog 3.61／400 則 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=一夜一夜%20神戸本店" target="_blank" rel="noopener">一夜一夜 神戶本店</a></div>
+                  <p>日式海鮮｜炭烤一夜干、釜炊白飯、日本酒</p>
+                  <p class="dinner-hours">星期五 17:00–00:00；星期日與國定假日休息。5 人訂位需電話，Tabelog 標示全席可吸菸。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28000741/" target="_blank" rel="noopener">⭐ Tabelog 3.56／259 則 ↗</a>
+                </div>
+                <div class="dinner-option">
+                  <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=鯛白湯らーめん%20○de▽%20三ノ宮店" target="_blank" rel="noopener">鯛白湯拉麵 ○de▽ 三之宮店</a><span class="dinner-pick">快速晚餐</span></div>
+                  <p>鯛魚拉麵｜濃厚鯛白湯、清爽鯛清湯、鯛魚飯</p>
+                  <p class="dinner-hours">星期五 17:30–22:30，料理 L.O. 22:00。僅 9 個吧台座位，5 人可能需候位或分開入座。</p>
+                  <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28069893/" target="_blank" rel="noopener">⭐ Tabelog 3.52／324 則 ↗</a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -629,51 +807,610 @@
       <section class="day-panel" id="day3" role="tabpanel" aria-labelledby="tab-day3" hidden>
         <div class="day-heading">
           <div><p class="day-kicker">2026/9/5 星期六 · TRANSFER DAY</p><h2>神戶三宮 → 姬路</h2></div>
-          <span class="day-duration">14:00–16:00 出發選項</span>
+          <span class="day-duration">08:00 起 · 好古園至 17:00</span>
         </div>
-        <div class="notice"><strong>🚆 Day 3 目前只安排移動</strong>住宿為 Hotel Monterey Himeji；抵達後的姬路行程暫時不排。</div>
+        <div class="notice"><strong>☕ 飯店寄行李 → 神戶上午 → 與家人會合 → 生田神社 → JR 站附近午餐 → 取行李 → 姬路好古園</strong>早餐退房後直接把 5 件行李寄放在飯店，再搭計程車前往 TAOCA COFFEE；南京町完整預留一小時，之後到 JR 三ノ宮站與家人會合，輕裝前往生田神社參拜，再回 JR 三ノ宮站周邊用餐。13:35 必須離店，約 13:40–13:50 回飯店取行李，14:00 前往／抵達 JR 三ノ宮站，以 14:22 新快速前往姬路；14:07 只在提早完成時搭乘，14:37 已是會壓縮好古園時間的風險備援。</div>
 
         <div class="timeline">
           <article class="stop">
             <div class="stop-time">08:00</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">飯店早餐</a><span class="tag">BREAKFAST</span></div><p class="stop-desc">早上 8 點在 The Royal Park Canvas Kobe Sannomiya 吃早餐。</p><div class="meta"><span>🍳 08:00</span><span>🏨 飯店內</span></div></div></div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">飯店早餐</a><span class="tag">BREAKFAST</span></div><p class="stop-desc">早上 8 點在 The Royal Park Canvas Kobe Sannomiya 吃早餐；餐後整理行李並辦理退房。</p><div class="meta"><span>🍳 08:00–08:45</span><span>🏨 早餐後退房</span></div></div></div>
           </article>
 
           <article class="stop">
-            <div class="stop-time">出發前</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅%20西口" target="_blank" rel="noopener">飯店 → JR 三ノ宮站</a><span class="tag">WALK</span></div><p class="stop-desc">從 The Royal Park Canvas Kobe Sannomiya 步行前往 JR 三ノ宮站；帶行李建議預留約 10–15 分鐘。</p><div class="meta"><span>🚶 約 6–10 分鐘</span><span>🎫 IC 卡可直接搭乘</span></div></div></div>
+            <div class="stop-time">09:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">飯店退房・寄放行李</a><span class="tag">LUGGAGE</span></div><p class="stop-desc">早餐後辦理退房，將 5 件大型行李直接寄放在 The Royal Park Canvas Kobe Sannomiya；完成後請櫃檯協助叫車，輕裝前往 TAOCA COFFEE。</p><div class="meta"><span>🧳 5 件行李一起寄放</span><span>🚕 約 09:40–09:45 出發</span></div></div><div class="stop-note">早上不先繞去 JR 三ノ宮站，也不依賴大型置物櫃；寄放時收好行李牌，並告知午餐後約 13:40 回來領取。</div></div>
           </article>
 
           <article class="stop">
-            <div class="stop-time">14–16</div>
+            <div class="stop-time">10:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=TAOCA%20COFFEE%20神戸元町店" target="_blank" rel="noopener">TAOCA COFFEE Kobe Motomachi</a><span class="tag">40 MIN</span></div><p class="stop-desc">行李寄放完成後，約 09:40–09:45 直接從飯店搭計程車前往，配合 10:00 開門抵達；喝特色咖啡、搭配少量甜點。</p><div class="meta"><span>☕ 星期六 10:00–19:00</span><span>🚕 飯店出發約 5–10 分鐘</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28066519/" target="_blank" rel="noopener">⭐ Tabelog 3.44／110 則 ↗</a></div></div><div class="stop-note">星期二休息；約 10:40 離開，步行前往南京町。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">10:45</div>
             <div class="stop-card">
               <div class="stop-main">
-                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅" target="_blank" rel="noopener">JR 三ノ宮站 → JR 姬路站</a><span class="tag">新快速</span></div>
-                <p class="stop-desc">搭 JR 神戶線新快速，往姬路方向直達，不用轉車。以下為 9/5 星期六下午 2–4 點的出發選項。</p>
-                <div class="meta"><span>🚆 約 40 分鐘</span><span>💴 IC ¥960／人</span></div>
-                <div class="bus-options" aria-label="三ノ宮到姬路新快速班次選項">
-                  <div class="bus-option"><span>14:07 三ノ宮</span><b>直達</b><span>14:47 姬路</span></div>
-                  <div class="bus-option"><span>14:22 三ノ宮</span><b>直達</b><span>15:02 姬路</span></div>
-                  <div class="bus-option"><span>14:37 三ノ宮</span><b>直達</b><span>15:17 姬路</span></div>
-                  <div class="bus-option"><span>14:52 三ノ宮</span><b>直達</b><span>15:32 姬路</span></div>
-                  <div class="bus-option"><span>15:07 三ノ宮</span><b>直達</b><span>15:47 姬路</span></div>
-                  <div class="bus-option"><span>15:22 三ノ宮</span><b>直達</b><span>16:02 姬路</span></div>
-                  <div class="bus-option"><span>15:37 三ノ宮</span><b>直達</b><span>16:17 姬路</span></div>
-                  <div class="bus-option"><span>15:52 三ノ宮</span><b>直達</b><span>16:32 姬路</span></div>
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=南京町%20長安門" target="_blank" rel="noopener">南京町・長安門</a><span class="tag">60 MIN</span></div>
+                <p class="stop-desc">從 TAOCA COFFEE 步行前往。10:30 後小吃攤與點心店陸續開門，可散步拍照並少量分食。</p>
+                <div class="meta"><span>🚶 約 3–5 分鐘</span><span>🥟 10:45–11:45</span></div>
+                <div class="dinner-options" aria-label="南京町午餐備選">
+                  <span class="dinner-options-label">LUNCH · 午餐備選四選一</span>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=グリル一平%20元町店" target="_blank" rel="noopener">Grill Ippei 元町店</a><span class="dinner-pick">11:00 開門</span></div>
+                    <p>神戶洋食｜蛋包飯、牛排、可樂餅</p>
+                    <p class="dinner-hours">星期六 11:00–15:00，L.O. 14:30。10:45 尚未開，11:00 起可用餐；週六排隊風險高，午餐不可預約。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28056372/" target="_blank" rel="noopener">⭐ Tabelog 3.67／711 則 ↗</a>
+                    <a class="tabelog-link" href="https://grill-ippei.co.jp/shop/motomachi-higashi/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=楽関記%20神戸元町" target="_blank" rel="noopener">楽関記</a><span class="dinner-pick">11:30 開門</span></div>
+                    <p>中華・香港料理｜小籠包、香港小盤</p>
+                    <p class="dinner-hours">星期六 11:30–14:30，L.O. 14:00。10:45 與 11:00 尚未開，11:30 才開門；位於元町站北側，午餐不可預約，依到店順序。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28049146/" target="_blank" rel="noopener">⭐ Tabelog 3.75／1,273 則 ↗</a>
+                    <a class="tabelog-link" href="https://rakkanki.com/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=圓記%20神戸元町" target="_blank" rel="noopener">圓記</a><span class="dinner-pick">11:30 開門</span></div>
+                    <p>香港飲茶｜點心、粥品、蘿蔔糕</p>
+                    <p class="dinner-hours">星期六 11:30–14:30，L.O. 14:00。10:45 與 11:00 尚未開，11:30 才開門；5 人建議預約。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28042596/" target="_blank" rel="noopener">⭐ Tabelog 3.75／622 則 ↗</a>
+                    <a class="tabelog-link" href="https://yunkee-kobe.com/info/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=伊藤グリル%20神戸元町" target="_blank" rel="noopener">伊藤グリル</a><span class="dinner-pick">11:30 開門</span></div>
+                    <p>老字號神戶洋食｜牛排、燉牛肉</p>
+                    <p class="dinner-hours">星期六 11:30–13:30。10:45 與 11:00 尚未開，11:30 才開門；預約僅提供套餐，5 人建議預約。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280102/28000847/" target="_blank" rel="noopener">⭐ Tabelog 3.67／479 則 ↗</a>
+                    <a class="tabelog-link" href="http://www.itogrill.com/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
                 </div>
               </div>
-              <div class="stop-note">星期六時刻與票價依 2026/9/5 查詢結果整理；搭車前仍請查看 <a href="https://transit.yahoo.co.jp/search/result?from=%E4%B8%89%E3%83%8E%E5%AE%AE%EF%BC%88%EF%BC%AA%EF%BC%B2%EF%BC%89&amp;to=%E5%A7%AB%E8%B7%AF&amp;y=2026&amp;m=09&amp;d=05&amp;hh=14&amp;m1=0&amp;m2=0&amp;type=1&amp;ticket=ic" target="_blank" rel="noopener">最新路線資訊 ↗</a> 與站內月台顯示。</div>
+              <div class="stop-note">這天的正式午餐移到生田神社附近；南京町完整預留一小時，只散步、少量分食，11:45 準時離開，先前往 JR 三ノ宮站與家人會合。四間餐廳資料仍保留作臨時備選，但不要在兩區都吃正式午餐。</div>
             </div>
           </article>
 
           <article class="stop">
-            <div class="stop-time">抵達後</div>
-            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Monterey%20Himeji" target="_blank" rel="noopener">Hotel Monterey Himeji</a><span class="tag rest">HOTEL</span></div><p class="stop-desc">飯店與 JR 姬路站相連；從東口方向前往，抵達後先辦理入住。</p><div class="meta"><span>🏨 ホテルモントレ姫路</span><span>📍 JR 姬路站東口方向</span></div></div></div>
+            <div class="stop-time">11:55</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅%20西口" target="_blank" rel="noopener">JR 三ノ宮站・與家人會合</a><span class="tag">MEET UP</span></div><p class="stop-desc">11:45 離開南京町，搭短程計程車到 JR 三ノ宮站西口；約 11:55–12:05 與家人會合並確認全員到齊，再一起前往生田神社。</p><div class="meta"><span>👨‍👩‍👧‍👦 會合約 10 分鐘</span><span>📍 JR 三ノ宮站西口</span></div></div><div class="stop-note">先約定西口的明確集合點並保持電話暢通；12:05 一起出發前往生田神社，以免壓縮參拜與午餐時間。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:10</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=生田神社%20神戸" target="_blank" rel="noopener">生田神社</a><span class="tag">20 MIN</span></div><p class="stop-desc">與家人會合後輕裝前往，約 12:10–12:30 參拜；以本殿與境內精華為主，不繞行生田之森。</p><div class="meta"><span>⛩️ 約 20 分鐘</span><span>🧳 行李仍寄放飯店</span><span>🍽️ 午餐回 JR 站周邊</span></div></div><div class="stop-note">全程不用帶行李；會合或移動延誤時縮短至 10–15 分鐘，保住 12:35 午餐。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:35</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅%20ランチ" target="_blank" rel="noopener">JR 三ノ宮站附近午餐</a><span class="tag">60 MIN</span></div>
+                <p class="stop-desc">12:35–13:35 用餐。首選賀正軒三宮店；若 12:45 仍未入座，立即改去可預約且座位多的 GREEN HOUSE Wald，不繼續排隊。</p>
+                <div class="dinner-options" aria-label="JR 三ノ宮站附近午餐推薦">
+                  <span class="dinner-options-label">LUNCH · 首選 Gashoken／其餘依預約與候位</span>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=賀正軒%20三宮店" target="_blank" rel="noopener">賀正軒 三宮店（Gashoken）</a><span class="dinner-pick">首選</span></div>
+                    <p>豚骨拉麵；JR 三ノ宮站步行約 2 分鐘。出餐快，預算約 ¥1,000–1,999。</p>
+                    <p class="dinner-hours">11:00–翌 04:00，L.O. 03:45；無休、不可預約。22 席全為吧台，5 人可能需要分開坐；若 12:45 仍未入座，立即改去 Wald。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28049182/" target="_blank" rel="noopener">⭐ Tabelog 3.47／604 則 ↗</a>
+                    <a class="tabelog-link" href="https://gashoken.co.jp/shoplist#a02" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=GREEN%20HOUSE%20Wald%20神戸" target="_blank" rel="noopener">GREEN HOUSE Wald</a><span class="dinner-pick">穩定備選</span></div>
+                    <p>義大利料理、咖啡；JR 三ノ宮站步行約 3 分鐘。180 席且可預約，5 人最容易一起入座；預算約 ¥2,000–2,999。</p>
+                    <p class="dinner-hours">星期六午餐 11:00–15:00。建議預約 12:30，並事先告知 13:30 前需要離店。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28053581/" target="_blank" rel="noopener">⭐ Tabelog 3.59／714 則 ↗</a>
+                    <a class="tabelog-link" href="https://www.green-house99.com/wald/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=GREEN%20HOUSE%20Silva%20神戸" target="_blank" rel="noopener">GREEN HOUSE Silva</a><span class="dinner-pick">現場備選</span></div>
+                    <p>咖啡、義大利料理；JR 三ノ宮站步行約 3–5 分鐘。78 席，預算約 ¥1,000–1,999。</p>
+                    <p class="dinner-hours">午餐 11:00–16:00；不可預約，星期六現場候位時間不確定。只在能立即入座時選擇。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2801/A280101/28004954/" target="_blank" rel="noopener">⭐ Tabelog 3.56／834 則 ↗</a>
+                    <a class="tabelog-link" href="https://www.green-house99.com/silva/" target="_blank" rel="noopener">查看官方網站 ↗</a>
+                  </div>
+                </div>
+              </div>
+              <div class="stop-note">13:35 不論是否吃完都開始離店，先回飯店領取行李；約 13:40–13:50 完成取件，14:00 前往／抵達 JR 三ノ宮站。首選賀正軒；想確保 5 人一起坐，直接預約座位較多的 Wald。</div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:40</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kobe%20Sannomiya" target="_blank" rel="noopener">午餐後回飯店取行李</a><span class="tag">PICK UP</span></div><p class="stop-desc">午餐後前往 The Royal Park Canvas Kobe Sannomiya；約 13:40–13:50 憑行李牌取回 5 件大型行李並逐件清點，隨即前往 JR 三ノ宮站。</p><div class="meta"><span>🧳 5 件行李逐件確認</span><span>🚕 14:00 前往／抵達車站</span></div></div><div class="stop-note">午餐前都保持輕裝；領到行李後不要再繞行其他景點，直接前往 JR 三ノ宮站並進月台，準備搭 14:22 新快速。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14:22</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20三ノ宮駅" target="_blank" rel="noopener">JR 三ノ宮站 → JR 姬路站</a><span class="tag">新快速</span></div>
+                <p class="stop-desc">搭 JR 神戶線新快速，往姬路方向直達，不用轉車。14:22 為推薦目標班次；若所有行程提早完成可搭 14:07，14:37 已是會壓縮好古園時間的最後風險備援。</p>
+                <div class="meta"><span>🚆 約 40 分鐘</span><span>💴 IC ¥960／人</span></div>
+                <div class="bus-options" aria-label="三ノ宮到姬路新快速班次選項">
+                  <div class="bus-option"><span>14:07 三ノ宮</span><b>提早完成才搭</b><span>14:47 姬路</span></div>
+                  <div class="bus-option"><span>14:22 三ノ宮</span><b>推薦</b><span>15:02 姬路</span></div>
+                  <div class="bus-option"><span>14:37 三ノ宮</span><b>最後風險備援</b><span>15:17 姬路</span></div>
+                  <div class="bus-option"><span>14:52 三ノ宮</span><b>不建議</b><span>15:32 姬路</span></div>
+                  <div class="bus-option"><span>15:07 三ノ宮</span><b>不建議</b><span>15:47 姬路</span></div>
+                  <div class="bus-option"><span>15:22 三ノ宮</span><b>不建議</b><span>16:02 姬路</span></div>
+                  <div class="bus-option"><span>15:37 三ノ宮</span><b>不建議</b><span>16:17 姬路</span></div>
+                  <div class="bus-option"><span>15:52 三ノ宮</span><b>無法排好古園</b><span>16:32 姬路</span></div>
+                </div>
+              </div>
+              <div class="stop-note">午餐 13:35 硬截止，約 13:40–13:50 回飯店取行李，14:00 前往／抵達車站並進月台。14:22 是推薦目標；錯過後的 14:37 僅作最後風險備援，會把好古園縮短至約 75 分鐘，寄放後務必直接搭計程車。星期六時刻與票價依 2026/9/5 查詢結果整理；搭車前仍請查看 <a href="https://transit.yahoo.co.jp/search/result?from=%E4%B8%89%E3%83%8E%E5%AE%AE%EF%BC%88%EF%BC%AA%EF%BC%B2%EF%BC%89&amp;to=%E5%A7%AB%E8%B7%AF&amp;y=2026&amp;m=09&amp;d=05&amp;hh=14&amp;m1=0&amp;m2=0&amp;type=1&amp;ticket=ic" target="_blank" rel="noopener">最新路線資訊 ↗</a> 與站內月台顯示。</div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:05</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Monterey%20Himeji" target="_blank" rel="noopener">Hotel Monterey Himeji 寄放行李</a><span class="tag rest">LUGGAGE</span></div><p class="stop-desc">推薦的 14:22 班次於 15:02 抵達；飯店與 JR 姬路站相連，從東口方向前往，只寄放行李、不進房整理，目標約 15:20 前完成並請櫃檯協助叫車。若搭 14:37 風險備援，約 15:17 才抵達姬路。</p><div class="meta"><span>🏨 ホテルモントレ姫路</span><span>⏱️ 下車至寄放完成約 15–20 分鐘</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:20</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=好古園%20姫路" target="_blank" rel="noopener">飯店 → 好古園</a><span class="tag">TAXI</span></div>
+                <p class="stop-desc">寄放行李後請飯店叫車，直接前往好古園入口。搭推薦的 14:22 班次，目標約 15:20 完成寄放、15:30 抵達好古園；若搭 14:37 風險備援，約 15:45 才能抵達。</p>
+                <div class="meta"><span>🚕 約 1.4 km・6–8 分鐘</span><span>💴 約 ¥800–1,100／台</span><span>🌿 好古園優先</span></div>
+              </div>
+              <div class="stop-note">5 位成人需兩台一般計程車；也可請飯店詢問可載 5 人的ジャンボ／ワゴンタクシー，但臨時不一定有車。車資為估算，以跳表、壅塞與叫車費為準。</div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=好古園%20姫路" target="_blank" rel="noopener">好古園</a><span class="tag">90 MIN</span></div><p class="stop-desc">搭推薦的 14:22 班次，目標 15:30 左右抵達，逛到 17:00 關園，完整保留約 90 分鐘欣賞庭園；14:37 風險備援約 15:45 抵達，只剩約 75 分鐘。不要晚於 16:30 才到入口。</p><div class="meta"><span>🌿 約 15:30–17:00</span><span>🎫 最後入園 16:30</span></div></div><div class="stop-note">實際開園資訊仍以 <a href="https://visit-himeji.com/zh-hant/sightseeing/koko-en-garden/" target="_blank" rel="noopener">好古園官方頁面 ↗</a> 為準。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">17:00 後</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=みゆき通り%20姫路" target="_blank" rel="noopener">好古園 → 商店街 → 姬路站</a><span class="tag">SNACKS</span></div>
+                <p class="stop-desc">出園後沿城端往姬路站方向回走。鯛魚燒兩間擇一；若還要吃正式晚餐，TACOPY 也只少量分食，避免吃太飽。</p>
+                <div class="meta"><span>🍡 鯛魚燒二選一</span><span>🍽️ 約 18:00–18:30 晚餐</span></div>
+                <div class="dinner-options" aria-label="好古園後回程小吃選項">
+                  <span class="dinner-options-label">AFTER 17:00 · 回程順序</span>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=甲賀米粉たい焼き%20姫路城前店" target="_blank" rel="noopener">甲賀米粉たい焼き 姫路城前店</a><span class="dinner-pick">出園後第一站</span></div>
+                    <p>靠近姬路城端；米粉外皮較酥、內部帶Q度，適合出園後先買。</p>
+                    <p class="dinner-hours">星期六 11:00–19:00。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28069274/" target="_blank" rel="noopener">⭐ Tabelog 3.07／44 則 ↗</a> · <a class="tabelog-link" href="https://komeko.club/archives/shoplists/834" target="_blank" rel="noopener">官方店舖資訊 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=鯛焼本舗%20遊示堂%20東駅前店" target="_blank" rel="noopener">鯛焼本舗 遊示堂 東駅前店</a><span class="dinner-pick">回程小繞</span></div>
+                    <p>薄脆外皮、甜度較低的粒餡；適合買了繼續走，不需久留。</p>
+                    <p class="dinner-hours">星期六 10:00–19:00；星期四休息。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28005378/" target="_blank" rel="noopener">⭐ Tabelog 3.58／312 則 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=姫路タコピィ" target="_blank" rel="noopener">姫路タコピィ</a><span class="dinner-pick">站前最後選</span></div>
+                    <p>Grand Festa 5番街｜回到姬路站前再吃姬路式明石燒，可先沾醬汁再配高湯。</p>
+                    <p class="dinner-hours">星期六 10:00–20:00。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28028954/" target="_blank" rel="noopener">⭐ Tabelog 3.49／830 則 ↗</a> · <a class="tabelog-link" href="https://himeji-festa.com/shop/detail/39" target="_blank" rel="noopener">官方店舖資訊 ↗</a>
+                  </div>
+                  <div class="dinner-option">
+                    <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=はまもとコーヒー%20姫路" target="_blank" rel="noopener">はまもとコーヒー</a><span class="dinner-pick">本日不建議</span></div>
+                    <p>御幸通商店街｜老咖啡店，可吃杏仁吐司；17:00 已關門，只適合比預期早很多抵達姬路、且不影響好古園時考慮。</p>
+                    <p class="dinner-hours">星期六 07:00–17:00，L.O. 16:30；星期四休息。</p>
+                    <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28001845/" target="_blank" rel="noopener">⭐ Tabelog 3.63／754 則 ↗</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
         </div>
 
+        <h3 class="section-title">好古園後正式晚餐</h3>
+        <div class="dinner-options" aria-label="好古園後姬路正式晚餐推薦清單">
+          <span class="dinner-options-label">DINNER · 推薦順位</span>
+          <div class="dinner-option">
+            <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=酒饌亭%20灘菊かっぱ亭" target="_blank" rel="noopener">酒饌亭 灘菊かっぱ亭</a><span class="dinner-pick">整體首選</span></div>
+            <p>姬路關東煮、穴子料理與灘菊地酒，最能一次吃到姬路特色；5 人強烈建議預約。</p>
+            <p class="dinner-hours">星期六官方 11:30–21:30，L.O. 21:00；Tabelog 標示營業至 21:00，訂位時請一併確認。</p>
+            <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28030489/" target="_blank" rel="noopener">⭐ Tabelog 3.49／551 則 ↗</a> · <a class="tabelog-link" href="https://www.nadagiku.co.jp/?mode=f23" target="_blank" rel="noopener">官方資訊 ↗</a>
+          </div>
+          <div class="dinner-option">
+            <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=一張羅%20姫路" target="_blank" rel="noopener">一張羅</a><span class="dinner-pick">穴子宴席</span></div>
+            <p>正式穴子料理、創作和食與播磨地酒，適合想坐下來慢慢吃完整晚餐；5 人建議預約。</p>
+            <p class="dinner-hours">星期六 17:30–22:00；最後點餐時間請訂位時確認。</p>
+            <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28008679/" target="_blank" rel="noopener">⭐ Tabelog 3.43／125 則 ↗</a> · <a class="tabelog-link" href="https://himeji-anago-iccyoura.com/" target="_blank" rel="noopener">官方網站 ↗</a>
+          </div>
+          <div class="dinner-option">
+            <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=淡州%20姫路" target="_blank" rel="noopener">淡州</a><span class="dinner-pick">Tabelog 最高分</span></div>
+            <p>炭火料理、穴子、燒鳥與刺身選擇豐富；位於姬路站南側，需要稍微繞路，5 人建議電話預約。</p>
+            <p class="dinner-hours">星期六 17:00–23:00，料理 L.O. 22:00。</p>
+            <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28021199/" target="_blank" rel="noopener">⭐ Tabelog 3.60／121 則 ↗</a> · <a class="tabelog-link" href="https://www.instagram.com/dansyu_himeji/" target="_blank" rel="noopener">官方 Instagram ↗</a>
+          </div>
+          <div class="dinner-option">
+            <div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=炭焼あなご%20やま義" target="_blank" rel="noopener">炭焼あなご やま義</a><span class="dinner-pick">平價代表</span></div>
+            <p>姬路代表性的炭燒穴子飯；若成功訂到夜御膳，可提升為首選。星期六 5 人的預約規則資訊不一致，務必先向店家確認。</p>
+            <p class="dinner-hours">星期六 11:00–20:00，L.O. 19:30；選這間建議減少小吃並直接前往。</p>
+            <a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28034320/" target="_blank" rel="noopener">⭐ Tabelog 3.49／942 則 ↗</a> · <a class="tabelog-link" href="https://anago-yamayoshi.jp/" target="_blank" rel="noopener">官方網站 ↗</a>
+          </div>
+        </div>
+        <div class="notice"><strong>🍽️ 晚餐節奏</strong>17:00 出園後，回程只選一份小吃分食，約 18:00–18:30 開始正式晚餐。若選やま義，盡量直接前往，避免錯過 19:30 最後點餐。</div>
+
         <h3 class="section-title">Day 3 提醒</h3>
-        <div class="tips"><div class="tip"><strong>🚆 搭車方向</strong>選擇 JR 神戶線「新快速」，確認列車會直達姬路；實際月台以當日站內顯示為準。</div><div class="tip"><strong>📌 目前安排範圍</strong>只列神戶三宮到姬路飯店的交通，其他行程之後再安排。</div></div>
+        <div class="tips"><div class="tip"><strong>🧳 飯店寄放</strong>早餐退房後把 5 件行李留在 The Royal Park Canvas Kobe Sannomiya；南京町後先到 JR 三ノ宮站與家人會合，輕裝參拜與用餐，約 13:40–13:50 再回飯店領取。</div><div class="tip"><strong>🍽️ 午餐停損</strong>首選賀正軒；12:45 尚未入座立即改 Wald，Silva 只在能立即入座時選擇。13:35 離店回飯店取行李，14:00 前往／抵達車站並進月台。</div><div class="tip"><strong>🚆 搭車方向</strong>選擇 JR 神戶線「新快速」，確認列車會直達姬路；14:22 為推薦目標，14:07 只在提早完成時搭，14:37 為最後風險備援。</div><div class="tip"><strong>🌿 好古園優先</strong>最後入園 16:30、17:00 關園。Hotel Monterey Himeji 約 15:20 完成寄放後直接搭計程車，目標 15:30 抵達、保留 90 分鐘；17:00 出園後再沿商店街步行。</div></div>
+      </section>
+
+      <section class="day-panel" id="day4" role="tabpanel" aria-labelledby="tab-day4" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/6 星期日 · CASTLE &amp; SPLIT TRANSFER</p><h2>姬路城 → 神戶機場／京都二條分流</h2></div>
+          <span class="day-duration">06:30 起 · 午餐後分流</span>
+        </div>
+        <div class="notice"><strong>🏯 上午全員同行，午餐後在姬路站分流</strong>早餐可選飯店自助餐，或先退房寄放行李後前往はまもとコーヒー。兩種方案都能在 08:15 左右抵達姬路城，爭取 09:00 開城第一批入場。京都組搭 13:11 Hikari，入住後前往二條城；19:00 航班組稍後搭 JR 新快速直達三ノ宮，再轉 Port Liner 前往神戶機場。</div>
+
+        <section class="choice-wrap" aria-labelledby="day4-breakfast-title">
+          <p class="choice-label">06:30 起 · 早餐二選一</p>
+          <h3 id="day4-breakfast-title">飯店早餐 or 姬路老喫茶</h3>
+          <p>飯店早餐最穩定；想體驗在地老咖啡店，可選順路前往姬路城的はまもとコーヒー。</p>
+          <div class="choice-grid">
+            <div class="choice recommended">
+              <small>OPTION A · 5 人最穩定</small>
+              <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Monterey%20Himeji" target="_blank" rel="noopener">Hotel Monterey Himeji 早餐 ↗</a></strong>
+              <p>06:45–07:35 在飯店吃日西式自助餐；07:35–07:55 退房並寄放行李，08:00 請櫃檯叫計程車，約 8–10 分鐘直達姬路城大手門。可吃穴子丼、姬路關東煮、ヒネポン、麵包、沙拉與甜點等。</p>
+              <div class="meta"><span>🍳 06:30–10:00</span><span>🕤 最終入場 09:30</span><span>💴 ¥3,500／人</span><a class="tabelog-link" href="https://www.hotelmonterey.co.jp/tw/himeji/stay/breakfast/" target="_blank" rel="noopener">官方早餐資訊 ↗</a></div>
+              <p style="margin-top:8px">5 人最容易控制時間且不用排隊。計程車通常需兩台一般車，或請飯店確認大型車。</p>
+            </div>
+            <div class="choice">
+              <small>OPTION B · 在地老喫茶</small>
+              <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%81%AF%E3%81%BE%E3%82%82%E3%81%A8%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E5%A7%AB%E8%B7%AF" target="_blank" rel="noopener">はまもとコーヒー ↗</a></strong>
+              <p>正式店址為姬路市二階町 49，位於御幸通商店街。招牌是虹吸咖啡與姬路名物杏仁吐司；麵包口感 Q 彈，杏仁醬使用杏仁粉、碎粒與杏仁片且不加保存料。</p>
+              <div class="meta"><span>☕ 星期日 07:00–17:00</span><span>🕟 L.O. 16:30</span><span>🥪 Morning 07:00–11:00</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28001845/" target="_blank" rel="noopener">⭐ Tabelog 3.62／754 則（2026/8/18）↗</a><a class="tabelog-link" href="https://www.hamamoto-coffee.com/" target="_blank" rel="noopener">官方網站 ↗</a><a class="tabelog-link" href="https://www.hamamoto-coffee.com/%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BCmenu/%E3%83%A2%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/" target="_blank" rel="noopener">官方 Morning ↗</a></div>
+              <p style="margin-top:8px">Morning 點任一飲料免費附一般吐司與水煮蛋；杏仁吐司需另外單點。36 席（吧台 18、桌席 18）、不可預約、全店禁煙、僅收現金，並提供英文菜單。</p>
+              <p style="margin-top:8px">星期四固定休息；官方 9 月休業表未列 9/6，當天依正常時段營業。週日可能在開門前排隊，近期週末紀錄為開門前 5 分鐘已有 12 人；5 人可能候位或分桌。</p>
+              <p style="margin-top:8px">建議 06:30–06:40 先退房寄放行李，06:45 從飯店步行約 7 分鐘，06:50–06:55 抵達排隊；07:00–07:50 用餐，餐後步行約 10 分鐘，約 08:05–08:15 抵達姬路城。</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="notice"><strong>🧳 兩方案共同提醒</strong>飯店早餐組於 07:35–07:55 退房；HAMAMOTO 組則在出門前完成退房。寄放時就分成「京都組／機場組」並掛牌，護照、機票、藥物隨身攜帶。08:00–08:30 為前往大手門與排隊緩衝，兩組最晚 08:20 會合。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">08:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=姫路城%20大手門" target="_blank" rel="noopener">前往姬路城大手門</a><span class="tag">TAXI／WALK</span></div><p class="stop-desc">飯店早餐組退房後搭計程車；HAMAMOTO 組用餐後步行前往。08:15–08:30 抵達並排隊，準備 09:00 開城入場。</p><div class="meta"><span>🚕 飯店出發約 8–10 分鐘</span><span>🚶 HAMAMOTO 出發約 10 分鐘</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">09:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=姫路城" target="_blank" rel="noopener">姬路城</a><span class="tag">105–120 MIN</span></div><p class="stop-desc">09:00 開城後直接入場，以天守閣為主，預計 10:50–11:00 離開，再搭計程車回姬路站前。</p><div class="meta"><span>🏯 09:00–10:50／11:00</span><span>🎫 09:00–17:00・最後入城 16:00</span><a class="tabelog-link" href="https://himejicastle-ticket.jp/" target="_blank" rel="noopener">官方購票 ↗</a></div></div><div class="stop-note">天守內約需 1.5–2 小時，樓梯陡且沒有電梯；穿方便穿脫、止滑的鞋。最新開放資訊以 <a href="https://www.himejicastle.jp/en/" target="_blank" rel="noopener">姬路城官方網站 ↗</a> 為準。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">11:10</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=姫路タコピィ" target="_blank" rel="noopener">姫路タコピィ・站前午餐</a><span class="tag">LUNCH</span></div>
+                <p class="stop-desc">11:10–12:10 回到姬路站前快速用餐。首選 TACOPY 的姬路式明石燒，出餐較快；不要排隊等名店，以免錯過京都組 13:11 的新幹線。</p>
+                <div class="meta"><span>🐙 星期日 10:00–20:00</span><a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28028954/" target="_blank" rel="noopener">⭐ Tabelog 3.49／830 則 ↗</a></div>
+                <div class="dinner-options" aria-label="午餐其他選項">
+                  <span class="dinner-options-label">BACKUP · 有餘裕再選</span>
+                  <div class="dinner-option"><div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=炭焼あなご%20やま義" target="_blank" rel="noopener">炭焼あなご やま義</a><span class="dinner-pick">不排隊才吃</span></div><p>姬路代表炭燒穴子飯；星期日 11:00–20:00，L.O. 19:30。若有排隊立刻放棄。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28034320/" target="_blank" rel="noopener">⭐ Tabelog 3.49／942 則 ↗</a> · <a class="tabelog-link" href="https://anago-yamayoshi.jp/" target="_blank" rel="noopener">官方網站 ↗</a></div>
+                  <div class="dinner-option"><div class="dinner-option-head"><a class="dinner-option-name" href="https://www.google.com/maps/search/?api=1&amp;query=鯛焼本舗%20遊示堂%20東駅前店" target="_blank" rel="noopener">鯛焼本舗 遊示堂 東駅前店</a><span class="dinner-pick">外帶備案</span></div><p>薄脆鯛魚燒；星期日 10:00–19:00。</p><a class="tabelog-link" href="https://tabelog.com/hyogo/A2805/A280501/28005378/" target="_blank" rel="noopener">⭐ Tabelog 3.58／312 則 ↗</a></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:15</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Monterey%20Himeji" target="_blank" rel="noopener">回飯店取行李</a><span class="tag rest">PICK UP</span></div><p class="stop-desc">12:15–12:30 回 Hotel Monterey Himeji，各組依行李牌領取並逐件清點。京都組走新幹線區，機場組走在來線區。</p><div class="meta"><span>🧳 約 15 分鐘</span><span>🎫 護照、機票、藥物隨身</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20姫路駅" target="_blank" rel="noopener">前往 JR 姬路站・準備分流</a><span class="tag">BUFFER</span></div><p class="stop-desc">取行李後直接進站。京都組最晚 12:55 到新幹線月台；機場組可在站內休息至 14:12 新快速發車。</p><div class="meta"><span>🚄 京都組 13:11</span><span>✈️ 機場組 14:12</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:10</div>
+            <div class="stop-card">
+              <div class="stop-main">
+                <div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20姫路駅" target="_blank" rel="noopener">JR 姬路站分流</a><span class="tag">2 ROUTES</span></div>
+                <p class="stop-desc">先把各組車票、行李與聯絡方式分好。京都組 13:11 先出發；機場組留在姬路站，14:12 搭新快速。</p>
+                <section class="choice-wrap split-choice" aria-labelledby="day4-split-title">
+                  <p class="choice-label">13:11 起 · SPLIT</p>
+                  <h3 id="day4-split-title">京都組／神戶機場組</h3>
+                  <div class="choice-grid">
+                    <div class="choice recommended">
+                      <small>ROUTE A · 京都組</small>
+                      <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=JR%20京都駅" target="_blank" rel="noopener">姬路 → 京都 → 京都二条 ↗</a></strong>
+                      <p>搭 13:11 Hikari 710，14:02 抵達京都；轉 JR 嵯峨野線到二條站，約 14:25–14:35 抵達飯店。若想增加京都端緩衝，可改搭 12:11 左右班次；不建議搭更晚，會錯過二之丸御殿受理時間。</p>
+                      <div class="meta"><span>🚄 13:11–14:02</span><span>🕛 寬鬆備案 12:11 左右</span><span>🧳 預約指定席與特大行李座位</span><a class="tabelog-link" href="https://timetable.jr-odekake.net/cgi-bin/mydia_sp.cgi?MD=3&amp;FN=0&amp;EID=0610619&amp;EN=%95P%98H" target="_blank" rel="noopener">JR 新幹線時刻 ↗</a><a class="tabelog-link" href="https://smart-ex.jp/en/index.php" target="_blank" rel="noopener">SmartEX ↗</a></div>
+                    </div>
+                    <div class="choice">
+                      <small>ROUTE B · 19:00 神戶機場航班組</small>
+                      <strong><a href="https://www.google.com/maps/search/?api=1&amp;query=神戸空港" target="_blank" rel="noopener">姬路 → 三ノ宮 → 神戶機場（UKB）↗</a></strong>
+                      <p>14:12 搭 JR 神戶線新快速，14:51 抵達三ノ宮（¥960）；轉乘預留 10–15 分鐘。Port Liner 約 15:00／15:10 發車，車程約 18 分鐘（¥340），約 15:18／15:28 抵達，合計約 ¥1,300。</p>
+                      <div class="meta"><span>🚆 14:12–14:51</span><span>🚝 約 15:00／15:10–15:18／15:28</span><span>💴 合計約 ¥1,300</span><a class="tabelog-link" href="https://timetable.jr-odekake.net/station-timetable/2863012001" target="_blank" rel="noopener">JR 姬路站時刻 ↗</a><a class="tabelog-link" href="https://www.knt-liner.co.jp/stationp01/" target="_blank" rel="noopener">Port Liner 時刻 ↗</a><a class="tabelog-link" href="https://www.knt-liner.co.jp/ticket/fee/" target="_blank" rel="noopener">Port Liner 票價 ↗</a></div>
+                      <p style="margin-top:8px">國內線第一航廈與車站直結；國際線第二航廈需另抓 10–15 分鐘。19:00 國際線以 16:00 前抵達為目標，14:12 推薦、14:41 為最晚安全新快速；國內線以 17:00 前抵達為目標，15:11／15:26 較穩、15:56 為最晚安全。</p>
+                      <p style="margin-top:8px">航空公司報到截止時間優先；帶行李不建議在三宮停留。新快速與 Port Liner 沒有專用大行李區，上車後避免堵住通道。</p>
+                      <div class="meta"><a class="tabelog-link" href="https://www.kairport.co.jp/access/portliner" target="_blank" rel="noopener">UKB 交通 ↗</a><a class="tabelog-link" href="https://www.knt-liner.co.jp/route-t2/" target="_blank" rel="noopener">第二航廈接駁 ↗</a><a class="tabelog-link" href="https://www.kairport.co.jp/support/faq" target="_blank" rel="noopener">機場 FAQ ↗</a></div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="stop-note">班次與月台仍可能調整，務必在出發前重查。京都組若錯過 13:11，二條城行程應直接取消；機場組以航空公司的報到截止時間為最高優先。</div>
+            </div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14:02</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ザ%20ロイヤルパーク%20キャンバス%20京都二条" target="_blank" rel="noopener">京都站 → The Royal Park Canvas 京都二條</a><span class="tag">TRANSFER</span></div><p class="stop-desc">轉 JR 嵯峨野線到二條站，車程約 6–7 分鐘，出站後步行約 2 分鐘；約 14:25–14:35 抵達飯店，先寄放行李並等候 15:00 入住。</p><div class="meta"><span>🚆 JR 約 ¥200／人</span><span>🏨 14:25–14:35 抵達</span><a class="tabelog-link" href="https://www.royalparkhotels.co.jp/en/canvas/kyotonijo/about/access/" target="_blank" rel="noopener">飯店交通資訊 ↗</a></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ザ%20ロイヤルパーク%20キャンバス%20京都二条" target="_blank" rel="noopener">The Royal Park Canvas 京都二條入住</a><span class="tag rest">CHECK-IN</span></div><p class="stop-desc">15:00 辦理入住，15:05–15:15 完成後立即請飯店叫車前往二條城東大手門。行程緊湊，先不要進房整理行李。</p><div class="meta"><span>🏨 入住 15:00 起</span><span>🚕 車程約 5–8 分鐘</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=元離宮二条城%20東大手門" target="_blank" rel="noopener">二條城・國寶二之丸御殿</a><span class="tag">95 MIN</span></div><p class="stop-desc">約 15:20–15:25 抵達東大手門，先直奔國寶二之丸御殿，觀看「大政奉還」歷史場景，再走庭園精華；17:00 閉城。</p><div class="meta"><span>🏯 08:45–17:00</span><span>🎫 入城截止 16:00</span><span>🏛️ 二之丸受理至 16:10</span><span>💴 入城＋二之丸 ¥1,300</span><a class="tabelog-link" href="https://nijo-jocastle.city.kyoto.lg.jp/guide/annai/" target="_blank" rel="noopener">官方參觀資訊 ↗</a><a class="tabelog-link" href="https://nijo-jocastle.city.kyoto.lg.jp/admission/ticket/" target="_blank" rel="noopener">官方票價 ↗</a><a class="tabelog-link" href="https://www.asoview.com/channel/tickets/xZrqrYmkZF/?utm_source=ticket_direct" target="_blank" rel="noopener">WEB 票 ↗</a></div></div><div class="stop-note">二之丸御殿不需另行預約，但務必事先買好 WEB 票；若京都組錯過 13:11 新幹線或 15:25 後仍未抵達，直接取消此景點。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">17:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=本格焼肉チファジャ%20烏丸仏光寺店" target="_blank" rel="noopener">二條城 → 本格燒肉 チファジャ 烏丸佛光寺店</a><span class="tag">TAXI</span></div><p class="stop-desc">17:00 從二條城搭計程車，約 10–15 分鐘抵達；預約 18:00，可提早到附近短暫休息。</p><div class="meta"><span>🚕 約 10–15 分鐘</span><span>📅 建議線上預約 18:00</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=本格焼肉チファジャ%20烏丸仏光寺店" target="_blank" rel="noopener">本格燒肉 チファジャ 烏丸佛光寺店</a><span class="tag">DINNER</span></div><p class="stop-desc">炭火燒肉，可選吃到飽或單點；122 席。星期日營業至深夜，5 人建議先線上訂位。</p><div class="meta"><span>🥩 17:00–翌 01:00</span><span>🕧 料理 L.O. 00:30</span><span>📅 全年無休</span><span>💴 約 ¥2,000–2,999</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2601/A260201/26021071/" target="_blank" rel="noopener">⭐ Tabelog 約 3.00／34 則（2026/8/18）↗</a><a class="tabelog-link" href="https://yoyaku.toreta.in/chifaja-bukkouji" target="_blank" rel="noopener">線上訂位 ↗</a><a class="tabelog-link" href="https://chifaja.com/chifaja/bukkoji" target="_blank" rel="noopener">官方店頁 ↗</a></div><div class="dinner-options" aria-label="吃到飽價格"><span class="dinner-options-label">吃到飽參考價格</span><div class="dinner-option"><p>Standard ¥3,938／Excellent ¥5,038／Premium ¥6,138；飲料暢飲 ¥1,980。價格與方案可能調整，出發前請以<a class="tabelog-link" href="https://chifaja.com/news/2025/10/01/2164" target="_blank" rel="noopener">官方最新公告 ↗</a>為準。</p></div></div></div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 4 提醒</h3>
+        <div class="tips"><div class="tip"><strong>☕ 早餐選擇</strong>重視時間穩定選飯店早餐；想體驗姬路老喫茶選はまもと，但不可預約，需接受候位或分桌。</div><div class="tip"><strong>🏯 姬路城</strong>週日上午可能較多人，最晚 08:30 前到大手門排隊；天守樓梯陡，午餐選快速出餐的店。</div><div class="tip"><strong>🧳 分組行李</strong>上午寄放時就分組掛牌，12:15 各組自行清點；護照、機票與藥物不要寄放。新快速與 Port Liner 沒有專用大行李區。</div><div class="tip"><strong>🚄 京都組</strong>13:11 Hikari 建議先買指定席；入住後不休息，立即搭計程車到二條城。WEB 票先買好，16:00 前完成入城。</div><div class="tip"><strong>✈️ 機場組</strong>航空公司報到截止時間優先；國際線第二航廈另抓 10–15 分鐘，不建議帶行李在三宮停留。</div><div class="tip"><strong>🍽️ 午餐停損</strong>優先 TACOPY；不等排隊名店，12:15 準時回飯店取行李。</div></div>
+      </section>
+
+      <section class="day-panel" id="day5" role="tabpanel" aria-labelledby="tab-day5" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/7 星期一 · HIGASHIYAMA</p><h2>清水寺・祇園・鴨川</h2></div>
+          <span class="day-duration">08:00–約 20:15</span>
+        </div>
+        <div class="notice"><strong>⛩️ 由高處往低處慢慢走</strong>早上搭計程車上清水坂，再沿產寧坂、高台寺、祇園一路下行。清水寺保留充足時間，鴨川為可取消項目；午餐與晚餐都建議事先線上預約。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">08:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=京都市清水坂観光駐車場" target="_blank" rel="noopener">飯店 → 京都市清水坂觀光停車場</a><span class="tag">TAXI</span></div><p class="stop-desc">從京都二條飯店搭計程車上清水坂，Maps 約 16 分鐘／5 km；早上仍可能塞車，抓 20–25 分鐘。下車後再上坡步行約 8–10 分鐘到清水寺。</p><div class="meta"><span>🚕 約 20–25 分鐘</span><span>🚶 上坡約 8–10 分鐘</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">08:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=清水寺" target="_blank" rel="noopener">清水寺・清水舞台・音羽瀧</a><span class="tag">130 MIN</span></div><p class="stop-desc">08:30–10:40 參觀本堂清水舞台與音羽瀧，保留約 2–2.25 小時，不用趕著拍完所有角度。</p><div class="meta"><span>🕕 每日 06:00–18:00</span><span>💴 成人 ¥500</span><a class="tabelog-link" href="https://www.kiyomizudera.or.jp/news/open-hour.php" target="_blank" rel="noopener">官方開放時間 ↗</a></div></div><div class="stop-note">官方未另列一般日最後入場時間；寺內台階與坡道較多，穿防滑好走的鞋。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">10:40</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=産寧坂%20京都" target="_blank" rel="noopener">產寧坂・下坡散步</a><span class="tag">40 MIN</span></div><p class="stop-desc">沿產寧坂緩慢下坡，途中拍照、看店與休息；11:20 左右前往午餐店。石階濕滑時放慢速度。</p><div class="meta"><span>🚶 10:40–11:20</span><span>☕ 可短暫休息</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">11:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=総本家ゆどうふ奥丹清水" target="_blank" rel="noopener">午餐・總本家湯豆腐 奥丹清水</a><span class="tag">80 MIN</span></div><p class="stop-desc">京都老字號湯豆腐，安排 11:30–12:50。可選湯豆腐、冷奴等精進套餐；星期一正常營業，星期四休息。</p><div class="meta"><span>🥢 星期一 11:00–16:00</span><span>💴 精進套餐 ¥4,400／昔豆腐 ¥5,500</span><span>💵 僅收現金</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2601/A260301/26001625/" target="_blank" rel="noopener">⭐ Tabelog 3.47／431 則（2026/8/18）↗</a><a class="tabelog-link" href="https://www.tofuokutan.info/" target="_blank" rel="noopener">官方網站 ↗</a><a class="tabelog-link" href="https://app.takeme.com/app/shop/SR10599?referrer=tofu_okutan" target="_blank" rel="noopener">線上預約申請 ↗</a></div></div><div class="stop-note">預約約一個月前開放，TakeMe 為申請制、不是即時確認，至少提前 2 天；多人同行建議務必先訂。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:50</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=高台寺" target="_blank" rel="noopener">步行前往高台寺</a><span class="tag">WALK</span></div><p class="stop-desc">午餐後步行約 15 分鐘，13:05 左右抵達。</p><div class="meta"><span>🚶 12:50–13:05</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:05</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=高台寺" target="_blank" rel="noopener">高台寺</a><span class="tag">55 MIN</span></div><p class="stop-desc">13:05–14:00 參觀庭園與寺院精華；不繞行太多支線，保留後續步行體力。</p><div class="meta"><span>⛩️ 09:00–17:30</span><span>🎫 受理至 17:00</span><span>💴 成人 ¥800</span><a class="tabelog-link" href="https://www.kodaiji.com/haikan.html" target="_blank" rel="noopener">官方參拜資訊 ↗</a></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=石塀小路" target="_blank" rel="noopener">石塀小路</a><span class="tag">20 MIN</span></div><p class="stop-desc">14:00–14:20 安靜散步。看到「撮影禁止」或私道標示就不要拍，不拍住家門口、私人巷道或藝舞妓，也不架腳架、不要堵路。</p><div class="meta"><span>🚶 最保守只散步</span><span>📵 尊重現場標示</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=祇園%20花見小路" target="_blank" rel="noopener">祇園・花見小路</a><span class="tag">45 MIN</span></div><p class="stop-desc">14:20–15:05 走花見小路等主要公道，欣賞街景；不進私人巷弄、不追拍藝舞妓。</p><div class="meta"><span>🚶 約 45 分鐘</span><span>📷 遵守攝影規範</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:10</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=建仁寺" target="_blank" rel="noopener">建仁寺・雙龍圖</a><span class="tag">80 MIN</span></div><p class="stop-desc">15:10–16:30 參觀京都最古老禪寺之一，重點看法堂天井的雙龍圖。</p><div class="meta"><span>🐉 10:00–17:00</span><span>🎫 受理至 16:30</span><span>💴 一般 ¥800</span><a class="tabelog-link" href="https://www.kenninji.jp/access/" target="_blank" rel="noopener">官方參拜資訊 ↗</a></div></div><div class="stop-note">炎熱或下雨時，可在高台寺後搭計程車直達建仁寺北門，祇園只走花見小路主公道。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">16:35</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=鴨川%20四条大橋" target="_blank" rel="noopener">鴨川・四條大橋</a><span class="tag">OPTIONAL</span></div><p class="stop-desc">16:35–17:20 到鴨川短程散步、吹風休息。這段是第一個可取消項目；若炎熱、下雨或腳累，直接前往晚餐附近休息。</p><div class="meta"><span>🌊 約 45 分鐘</span><span>☂️ 雨熱即取消</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">17:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ぎをん萬養軒%20本店" target="_blank" rel="noopener">前往晚餐・休息緩衝</a><span class="tag rest">BUFFER</span></div><p class="stop-desc">17:20–17:50 前往餐廳附近，預留洗手間、整理衣著與稍坐休息的時間。</p><div class="meta"><span>⏱️ 30 分鐘緩衝</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ぎをん萬養軒%20本店" target="_blank" rel="noopener">晚餐・ぎをん萬養軒</a><span class="tag">DINNER</span></div><p class="stop-desc">祇園老字號法式料理，10 道左右套餐預留 2–2.5 小時，約 20:15 結束。星期一正常營業，星期二、三休息。</p><div class="meta"><span>🍽️ 星期一 17:00–22:00</span><span>🕗 最終入店 20:00</span><span>💴 晚餐套餐 ¥15,000／¥19,000</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2601/A260301/26003291/" target="_blank" rel="noopener">⭐ Tabelog 3.06／17 則（2026/8/18）↗</a><a class="tabelog-link" href="https://manyoken.com/" target="_blank" rel="noopener">官方網站 ↗</a><a class="tabelog-link" href="https://yoyaku.toreta.in/gionmanyoken/" target="_blank" rel="noopener">線上預約 ↗</a></div></div><div class="stop-note">套餐價格含稅與服務費；多人同行務必先線上預約 18:00。</div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 5 提醒</h3>
+        <div class="tips"><div class="tip"><strong>🚕 先上後下</strong>早上搭車到清水坂上方，再一路往祇園方向下行，減少不必要的上坡。</div><div class="tip"><strong>📅 先訂兩餐</strong>奥丹為申請制且非即時確認；萬養軒可線上訂位。兩間都建議先完成預約。</div><div class="tip"><strong>☂️ 雨熱備案</strong>取消鴨川；高台寺後搭計程車到建仁寺北門，祇園只走花見小路主公道。</div><div class="tip"><strong>⛩️ 開放確認</strong>三座寺院星期一通常開放，目前未見 9/7 臨休公告；出發前仍請再查官方最新消息。</div></div>
+      </section>
+
+      <section class="day-panel" id="day6" role="tabpanel" aria-labelledby="tab-day6" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/8 星期二 · OSAKA DAY TRIP</p><h2>萬博記念公園・大阪城・難波</h2></div>
+          <span class="day-duration">06:45–約 21:00</span>
+        </div>
+        <div class="notice"><strong>☀️ 把大阪排在星期二</strong>萬博記念公園固定星期三休園，因此安排 9/8 星期二前往；隔天再去全年開放的宇治。這天跨區較多，中段以計程車換取休息與時間。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">06:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kyoto%20Nijo" target="_blank" rel="noopener">Royal Park Canvas 京都二條早餐</a><span class="tag">BREAKFAST</span></div><p class="stop-desc">06:45–07:35 吃飯店早餐，帶輕便隨身物品出發；行李留在同一間飯店。</p><div class="meta"><span>🍳 06:30–10:00</span><span>💴 ¥2,000／人</span><a class="tabelog-link" href="https://www.royalparkhotels.co.jp/canvas/kyotonijo/stay/breakfast/index.html" target="_blank" rel="noopener">官方早餐資訊 ↗</a></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">07:50</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=万博記念公園%20自然文化園%20中央口" target="_blank" rel="noopener">京都二條 → 萬博記念公園</a><span class="tag">JR＋TAXI</span></div><p class="stop-desc">從飯店到京都站，搭 JR 至茨木站，再從西口搭計程車到自然文化園中央口；目標 09:20 左右抵達，在 09:30 開園前準備入場。</p><div class="meta"><span>🚆 京都 → 茨木約 22 分鐘</span><span>🚕 JR 茨木 → 公園約 15–20 分鐘</span></div></div><div class="stop-note">全程大眾運輸也可行，但需多次轉乘；當天請以 Google Maps 與車站顯示確認班次。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">09:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=万博記念公園%20太陽の塔" target="_blank" rel="noopener">萬博記念公園・太陽之塔・日本庭園</a><span class="tag">120 MIN</span></div><p class="stop-desc">09:30 入園，預約 09:45 或 10:00 太陽之塔內部；約 10:40–11:25 改走平坦的日本庭園精華。</p><div class="meta"><span>🌳 09:30–17:00・最後入園 16:30</span><span>🗿 太陽之塔 10:00–17:00</span><span>💴 套票成人 ¥1,080</span><a class="tabelog-link" href="https://www.expo70-park.jp/guide/check/" target="_blank" rel="noopener">公園營業資訊 ↗</a><a class="tabelog-link" href="https://taiyounotou-expo70.jp/reservation/" target="_blank" rel="noopener">太陽之塔預約 ↗</a></div></div><div class="stop-note">星期三固定休園；太陽之塔可提前 4 個月預約、先到先得。若未訂到內部場次，只看外觀並把時間留給庭園。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">11:35</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=EXPOCITY%20大阪" target="_blank" rel="noopener">EXPOCITY 午餐</a><span class="tag">LUNCH</span></div><p class="stop-desc">從公園中央口步行前往，11:35–12:35 用餐；11:30 左右入座，選不用排長隊的店並於 12:45 前離開。</p><div class="choice-grid">
+                <div class="choice"><div class="choice-head"><a href="https://www.google.com/maps/search/?api=1&amp;query=万博食堂%20EXPOCITY" target="_blank" rel="noopener">萬博食堂 ↗</a><span class="badge recommend">最有主題</span></div><p>1970 年代復古洋食與日式套餐。</p><div class="meta"><span>🕚 平日 11:00–21:00</span><a class="tabelog-link" href="https://tabelog.com/osaka/A2706/A270602/27088792/" target="_blank" rel="noopener">⭐ Tabelog 約 3.30／145 則（2026/8/18）↗</a></div></div>
+                <div class="choice"><div class="choice-head"><a href="https://www.google.com/maps/search/?api=1&amp;query=ごはんとわたし%20EXPOCITY" target="_blank" rel="noopener">ごはんとわたし ↗</a><span class="badge">定食</span></div><p>やまや定食、明太子與小菜續加。</p><div class="meta"><span>🕚 11:00–21:00・L.O. 20:00</span><a class="tabelog-link" href="https://tabelog.com/osaka/A2706/A270602/27088834/" target="_blank" rel="noopener">⭐ Tabelog 3.40／253 則（2026/8/18）↗</a><a class="tabelog-link" href="https://mitsui-shopping-park.com/lalaport/expocity/shopguide/702640.html" target="_blank" rel="noopener">官方資訊 ↗</a></div></div>
+                <div class="choice"><div class="choice-head"><a href="https://www.google.com/maps/search/?api=1&amp;query=大起水産回転寿司%20EXPOCITY店" target="_blank" rel="noopener">大起水產迴轉壽司 ↗</a><span class="badge">壽司</span></div><p>選擇多但可能排隊，必要時接受分桌。</p><div class="meta"><span>🕚 約 11:00–22:00</span><a class="tabelog-link" href="https://tabelog.com/osaka/A2706/A270602/27088766/" target="_blank" rel="noopener">Tabelog ↗</a><span>出發前依館方複查</span></div></div>
+              </div><div class="meta"><a class="tabelog-link" href="https://mitsui-shopping-park.com/lalaport/expocity/gourmet/" target="_blank" rel="noopener">EXPOCITY 官方餐廳列表 ↗</a></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">12:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=大阪城御座船%20乗り場" target="_blank" rel="noopener">EXPOCITY → 大阪城御座船碼頭</a><span class="tag">TAXI</span></div><p class="stop-desc">搭計程車約 35–50 分鐘前往大阪城御座船碼頭，目標 13:30 左右抵達並購買當日船票。</p><div class="meta"><span>🚕 視路況約 35–50 分鐘</span><span>🚇 大眾運輸約 55–65 分鐘＋步行</span></div></div><div class="stop-note">這一段若改搭電車會多次轉乘並壓縮黑門市場時間；多人可請 EXPOCITY 服務台協助叫大型車，否則分乘一般車。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:30</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=大阪城公園%20大阪城御座船" target="_blank" rel="noopener">大阪城公園・大阪城御座船</a><span class="tag">90 MIN</span></div><p class="stop-desc">先在碼頭購買當日票，若有 14:00 或 14:20 場次就搭約 20 分鐘的御座船；其餘時間在城牆與天守閣外圍散步，15:00 左右離開。</p><div class="meta"><span>⛵ 10:00–16:30 最末班</span><span>💴 成人 ¥1,800・65 歲以上 ¥1,200</span><a class="tabelog-link" href="https://www.banpry.jp/ogozabune/" target="_blank" rel="noopener">御座船官方資訊 ↗</a></div></div><div class="stop-note">無電話或網路訂位，只能現場購票，滿席就跳過；不特別排天守閣內部，避免樓梯與排隊。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">15:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=黒門市場" target="_blank" rel="noopener">大阪城 → 黑門市場</a><span class="tag">TAXI＋SNACK</span></div><p class="stop-desc">搭計程車約 15–20 分鐘，15:30–16:45 逛市場並少量分食小吃。鮮魚與小吃多在 09:00–17:00、售完即收，抵達後先吃想吃的店。</p><div class="meta"><span>🐟 多數攤店約 17:00 關門</span><span>🛒 黑門三平 08:00–20:00</span><a class="tabelog-link" href="https://kuromon.com/jp/" target="_blank" rel="noopener">市場官方資訊 ↗</a></div></div><div class="stop-note">這段以小吃與散步為主，不在市場吃完整晚餐；若前段延誤，可縮短至 30–45 分鐘。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=法善寺横丁%20道頓堀" target="_blank" rel="noopener">法善寺橫丁・道頓堀短散步</a><span class="tag">OPTIONAL</span></div><p class="stop-desc">17:00–17:40 從黑門市場往法善寺與道頓堀方向慢慢走；市場延誤或已累時直接縮短，提早到餐廳附近休息。</p><div class="meta"><span>🚶 約 40 分鐘</span><span>☂️ 可取消</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=ふぐ天神%20宗右衛門なんば店" target="_blank" rel="noopener">晚餐・ふぐ天神 宗右衛門なんば店</a><span class="tag">DINNER</span></div><p class="stop-desc">難波、道頓堀附近的河豚料理，可選河豚火鍋、薄切刺身與炭火燒河豚；建議事先線上訂 18:00。</p><div class="meta"><span>🐡 16:00–24:00</span><span>💴 約 ¥5,000–5,999／人</span><a class="tabelog-link" href="https://tabelog.com/osaka/A2701/A270202/27012279/" target="_blank" rel="noopener">⭐ Tabelog 3.19／63 則（2026/8/18）↗</a><a class="tabelog-link" href="https://fugutenjinnamba.owst.jp/" target="_blank" rel="noopener">官方資訊・線上預約 ↗</a></div></div><div class="stop-note">原參考的「玄品 法善寺 総本店」已公告 2026/9/8 臨時休業，當天不能選。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">20:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=なんば駅" target="_blank" rel="noopener">難波 → 京都二條飯店</a><span class="tag rest">RETURN</span></div><p class="stop-desc">餐後由難波搭大阪 Metro 至新大阪，再轉 JR 回京都與二條；若已累，可從京都站搭計程車回飯店。</p><div class="meta"><span>🚆 約 60–80 分鐘</span><span>🛏️ 回原飯店休息</span></div></div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 6 提醒</h3>
+        <div class="tips"><div class="tip"><strong>📅 星期安排</strong>萬博記念公園 9/9 星期三休園，因此大阪固定排在 9/8。</div><div class="tip"><strong>🎫 先訂太陽之塔</strong>優先預約 09:45 或 10:00；沒票就只看外觀，不等待現場空位。</div><div class="tip"><strong>⛵ 船票看現場</strong>御座船不能預約，沒有合適場次就直接散步，不壓縮黑門市場。</div><div class="tip"><strong>🐡 更換晚餐</strong>玄品法善寺 9/8 臨休，已改用可線上訂位的ふぐ天神。</div></div>
+      </section>
+
+      <section class="day-panel" id="day7" role="tabpanel" aria-labelledby="tab-day7" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/9 星期三 · UJI DAY TRIP</p><h2>宇治半日・下午休息</h2></div>
+          <span class="day-duration">06:45–下午休息・晚餐彈性</span>
+        </div>
+        <div class="notice"><strong>🍵 輕裝去宇治，午後回飯店休息</strong>早餐後從 JR 二條站出發，上午集中參觀平等院與吃抹茶午餐；14:50–15:00 左右回到京都二條飯店。傍晚視體力選四條河原町或留在二條附近。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">06:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kyoto%20Nijo" target="_blank" rel="noopener">Royal Park Canvas 京都二條早餐</a><span class="tag">BREAKFAST</span></div><p class="stop-desc">在 Canvas Lounge 吃日西式自助早餐，06:45–07:35 用餐，之後整理隨身物品；宇治當天不用帶行李。</p><div class="meta"><span>🍳 06:30–10:00</span><span>💴 ¥2,000／人</span><a class="tabelog-link" href="https://www.royalparkhotels.co.jp/canvas/kyotonijo/stay/breakfast/index.html" target="_blank" rel="noopener">官方早餐資訊 ↗</a></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">08:40</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20二条駅" target="_blank" rel="noopener">飯店 → JR 二條站 → 宇治</a><span class="tag">JR</span></div><p class="stop-desc">飯店步行約 2 分鐘到二條站。08:51–08:58 搭 JR 嵯峨野線至京都，轉 09:10–09:34 JR 奈良線普通直達宇治。</p><div class="meta"><span>🚆 轉車 1 次</span><span>💴 IC 合計 ¥320</span><span>🕘 09:34 抵達宇治</span></div></div><div class="stop-note">備選：09:08 二條 → 京都，轉 09:34–09:51 みやこ路快速到宇治。班次依目前資料整理，出發前請再查 <a href="https://timetable.jr-odekake.net/line-timetable/2300" target="_blank" rel="noopener">JR 奈良線下行時刻 ↗</a>。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">09:34</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=平等院" target="_blank" rel="noopener">JR 宇治站 → 平等院</a><span class="tag">WALK</span></div><p class="stop-desc">從 JR 宇治站步行約 15 分鐘，09:50 左右抵達平等院。</p><div class="meta"><span>🚶 09:34–09:50</span><span>約 1 km</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">09:50</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=平等院" target="_blank" rel="noopener">平等院・鳳凰堂</a><span class="tag">95 MIN</span></div><p class="stop-desc">09:50–11:25 參觀庭園與鳳翔館，欣賞倒映在水池中的鳳凰堂；以約 90–95 分鐘為主，不為內部參觀打亂午餐時間。</p><div class="meta"><span>🌿 庭園 08:45–17:30・最晚 17:15</span><span>🏛️ 鳳翔館 09:00–17:00・最晚 16:45</span><span>💴 成人 ¥700</span><a class="tabelog-link" href="https://www.byodoin.or.jp/en/guide/" target="_blank" rel="noopener">官方參觀資訊 ↗</a></div></div><div class="stop-note">鳳凰堂內部另付 ¥300，入園後購買當日指定場次。2026/6/16–10/15 每場限 30 人，10:30、11:30 等部分場次停辦，平日也可能等 1 小時；只有 10:10 或 10:50 等合適場次才參加。9/1–9/11 鳳翔館「扉絵の間」暫停開放，其餘區域照常。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">11:25</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=中村藤吉本店%20平等院店" target="_blank" rel="noopener">午餐・中村藤吉本店 平等院店</a><span class="tag">LUNCH</span></div><p class="stop-desc">從平等院步行約 10 分鐘，11:35–13:20 用餐。可選生茶蕎麥麵、抹茶生茶果凍與焙茶甜點；先找座位再自助點餐。</p><div class="meta"><span>🍵 星期二 Cafe 10:00–17:00・L.O. 16:30</span><span>🛍️ 賣場 10:00–17:00</span><span>💴 約 ¥1,500–2,500／人</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2607/A260701/26002793/" target="_blank" rel="noopener">⭐ Tabelog 3.40／611 則（2026/8/18）↗</a><a class="tabelog-link" href="https://tokichi.jp/pages/byodo-in-store-page" target="_blank" rel="noopener">官方店舖資訊 ↗</a><a class="tabelog-link" href="https://tokichi.jp/blogs/menu/byodoin" target="_blank" rel="noopener">官方菜單 ↗</a></div></div><div class="stop-note">不接受預約，繁忙時可能提早停止受理。建議 11:25 離開平等院並接受分桌；抓 90–105 分鐘，不再另外排下午甜點。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:20</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=宇治川%20宇治橋" target="_blank" rel="noopener">宇治川短散步</a><span class="tag">OPTIONAL</span></div><p class="stop-desc">13:20–13:45 在宇治川與宇治橋附近短程散步。炎熱、下雨、午餐候位或腳累時直接取消，提早回 JR 宇治站。</p><div class="meta"><span>🌊 約 25 分鐘</span><span>☂️ 第一個可取消項目</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">13:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20宇治駅" target="_blank" rel="noopener">宇治 → 京都二條飯店</a><span class="tag">JR</span></div><p class="stop-desc">步行約 9–12 分鐘回 JR 宇治站，約 14:10–14:25 搭みやこ路快速至京都，轉 JR 嵯峨野線回二條；預計 14:50–15:00 回飯店。</p><div class="meta"><span>🚆 京都站轉車 1 次</span><span>🛏️ 15:00–17:30 休息</span><a class="tabelog-link" href="https://timetable.jr-odekake.net/line-timetable/2301" target="_blank" rel="noopener">JR 奈良線上行時刻 ↗</a></div></div><div class="stop-note">回程以當日月台顯示為準；若錯過快速，搭普通列車即可，不需要趕車。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=四条河原町" target="_blank" rel="noopener">晚餐方案 A・四條河原町</a><span class="tag">DINNER</span></div><p class="stop-desc">休息後有體力再到四條河原町散步，晚餐二選一；不需要兩間都排。</p><div class="choice-grid">
+                <div class="choice"><div class="choice-head"><a href="https://www.google.com/maps/search/?api=1&amp;query=名代とんかつ%20かつくら%20三条本店" target="_blank" rel="noopener">名代炸豬排 かつくら 三條本店 ↗</a><span class="badge recommend">炸豬排</span></div><p>京都炸豬排名店，晚餐約 ¥2,000–2,999。</p><div class="meta"><span>🕚 11:00–21:00・L.O. 20:30</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2601/A260201/26001918/" target="_blank" rel="noopener">⭐ Tabelog 3.22／243 則（2026/8/18）↗</a><a class="tabelog-link" href="https://www.katsukura.jp/shops/sanjo/" target="_blank" rel="noopener">官方資訊 ↗</a></div></div>
+                <div class="choice"><div class="choice-head"><a href="https://www.google.com/maps/search/?api=1&amp;query=麺匠たか松%20四条店" target="_blank" rel="noopener">麵匠たか松 四條店 ↗</a><span class="badge">沾麵／拉麵</span></div><p>雞魚介系沾麵與拉麵，約 ¥1,000；想吃得輕鬆、彈性較大可選這間。</p><div class="meta"><span>🕚 平日 11:00–23:00・L.O. 22:30</span><a class="tabelog-link" href="https://tabelog.com/kyoto/A2601/A260101/26028047/" target="_blank" rel="noopener">⭐ Tabelog 3.50／635 則（2026/8/18）↗</a><a class="tabelog-link" href="https://mensho.net/tenpo.html" target="_blank" rel="noopener">官方資訊 ↗</a></div></div>
+              </div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">18:00</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kyoto%20Nijo" target="_blank" rel="noopener">晚餐方案 B・留在二條附近</a><span class="tag rest">REST</span></div><p class="stop-desc">若上午已累，留在飯店附近自由晚餐，餐後直接休息；不勉強再往四條河原町移動。</p></div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 7 提醒</h3>
+        <div class="tips"><div class="tip"><strong>🚆 班次重查</strong>JR 時刻為目前查詢結果，請在 2026/9/9 出發前用官方時刻表再次確認。</div><div class="tip"><strong>🏛️ 鳳凰堂內部</strong>只有入園後才能購買當日場次；若沒有 10:10、10:50 等合適場次就跳過，不壓縮午餐。</div><div class="tip"><strong>🍵 午餐不預約</strong>中村藤吉平等院店採現場入店，可能候位或提早停受付；提早離開平等院並接受分桌。</div><div class="tip"><strong>🌊 彈性停損</strong>午餐延誤就取消宇治川散步，下午 15:00–17:30 的飯店休息優先保留。</div></div>
+      </section>
+
+      <section class="day-panel" id="day8" role="tabpanel" aria-labelledby="tab-day8" hidden>
+        <div class="day-heading">
+          <div><p class="day-kicker">2026/9/10 星期四 · DEPARTURE DAY</p><h2>京都退房・臨空城・關西機場</h2></div>
+          <span class="day-duration">06:45–18:10 航班</span>
+        </div>
+        <div class="notice"><strong>🧳 先到 KIX 寄行李，再回臨空城</strong>HARUKA 不停臨空城，不能照截圖在機場前一站下車。最穩定的方式是先搭 HARUKA 到關西機場，把大件行李交給人工寄存，再輕裝搭一站回臨空城。</div>
+
+        <div class="timeline">
+          <article class="stop">
+            <div class="stop-time">06:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=The%20Royal%20Park%20Canvas%20Kyoto%20Nijo" target="_blank" rel="noopener">飯店早餐・退房</a><span class="tag">CHECK-OUT</span></div><p class="stop-desc">06:45–07:25 吃早餐，07:25–07:45 完成退房並確認護照、機票與全部行李。</p><div class="meta"><span>🍳 早餐 06:30–10:00</span><span>🧳 07:45 前離開飯店</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">07:45</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=JR%20二条駅" target="_blank" rel="noopener">二條 → 京都站 → 關西機場</a><span class="tag">JR＋HARUKA</span></div><p class="stop-desc">從 JR 二條站到京都站，預留換車、買票與月台移動時間，搭約 08:15–08:45 出發的 HARUKA；約 09:35–10:05 抵達 KIX 第一航廈。</p><div class="meta"><span>🚆 HARUKA 約 75–80 分鐘</span><span>💴 外國旅客優惠單程票京都 ¥2,200</span><a class="tabelog-link" href="https://www.westjr.co.jp/travel-information/tc/tickets-passes/oneway/haruka/" target="_blank" rel="noopener">HARUKA 官方票券 ↗</a></div></div><div class="stop-note">HARUKA 不停臨空城。2026/9/10 的正式班次請在出發前以 JR 官方時刻表再次確認；優惠票可提前 1 個月預訂。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">10:05</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=関西国際空港%20第1ターミナル%20JAL%20ABC" target="_blank" rel="noopener">KIX 第一航廈寄放行李</a><span class="tag">LUGGAGE</span></div><p class="stop-desc">10:05–10:25 在第一航廈 1F 的 JAL ABC 人工櫃台寄放大件行李，再帶貴重物品輕裝前往臨空城。</p><div class="meta"><span>🧳 06:30–22:30</span><span>💴 大型行李約 ¥800／日，依現場公告</span><a class="tabelog-link" href="https://www.kansai-airport.or.jp/tw/service/delivery" target="_blank" rel="noopener">KIX 官方行李服務 ↗</a><a class="tabelog-link" href="https://www.jalabc.com/en/airport_counter/kansai-airport.html" target="_blank" rel="noopener">JAL ABC 櫃台資訊 ↗</a></div></div><div class="stop-note">不要把全部大行李押在臨空城站置物櫃，熱門時段可能客滿；機場人工寄存較適合多人與大型行李。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">10:25</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=りんくうタウン駅" target="_blank" rel="noopener">KIX → 臨空城站</a><span class="tag">JR／NANKAI</span></div><p class="stop-desc">從機場搭 JR 關空快速或南海普通、空港急行，一站抵達臨空城；車程約 6 分鐘。</p><div class="meta"><span>🚆 一站約 6 分鐘</span><span>💴 約 ¥370／程</span></div></div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">10:40</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=りんくうプレミアム・アウトレット" target="_blank" rel="noopener">臨空城 Premium Outlets・午餐</a><span class="tag">210 MIN</span></div><p class="stop-desc">10:40–14:05 在海邊 Outlet 輕鬆逛街，11:00 後於園區餐廳或 Food Court 午餐；14:05 開始往車站移動。</p><div class="meta"><span>🛍️ 商店／Food Court 10:00–20:00</span><span>🍽️ 餐廳 11:00–21:00</span><a class="tabelog-link" href="https://www.premiumoutlets.co.jp/rinku/information/info216.html" target="_blank" rel="noopener">官方營業資訊 ↗</a></div></div><div class="stop-note">時間有限，先查好想去的品牌與區域；午餐不要排候位太久的店，最晚 14:10 離開。</div></div>
+          </article>
+
+          <article class="stop">
+            <div class="stop-time">14:10</div>
+            <div class="stop-card"><div class="stop-main"><div class="stop-top"><a class="place-link" href="https://www.google.com/maps/search/?api=1&amp;query=関西国際空港%20第1ターミナル" target="_blank" rel="noopener">臨空城 → KIX 第一航廈</a><span class="tag">AIRPORT</span></div><p class="stop-desc">搭一站列車回機場，14:30 前抵達；取回行李後直接前往航空公司櫃台，目標 15:00 前完成報到動線。</p><div class="meta"><span>✈️ 18:10 國際線</span><span>⏱️ 預留約 3 小時 10 分鐘</span></div></div><div class="stop-note">15:00–18:10 辦理報到、安檢、出境、免稅店與登機；航空公司實際櫃台與截止時間以訂位資料為準。</div></div>
+          </article>
+        </div>
+
+        <h3 class="section-title">Day 8 提醒</h3>
+        <div class="tips"><div class="tip"><strong>🚆 不在臨空城下 HARUKA</strong>HARUKA 直達 KIX、但不停臨空城；先到機場寄行李最簡單。</div><div class="tip"><strong>🧳 人工寄存優先</strong>多人與大型行李不要依賴臨空城置物櫃，貴重品與護照隨身攜帶。</div><div class="tip"><strong>🕑 14:10 硬截止</strong>不論是否逛完都離開 Outlet，確保國際線至少提前約 3 小時到航廈。</div><div class="tip"><strong>📅 出發前重查</strong>JR、南海與航空公司時間都在 2026/9/10 前再次確認。</div></div>
       </section>
     </main>
 
@@ -689,6 +1426,11 @@
       <button class="taxi-day-tab" id="taxi-tab-day1" type="button" role="tab" aria-selected="true" aria-controls="taxi-day1">Day 1・9/3</button>
       <button class="taxi-day-tab" id="taxi-tab-day2" type="button" role="tab" aria-selected="false" aria-controls="taxi-day2">Day 2・9/4</button>
       <button class="taxi-day-tab" id="taxi-tab-day3" type="button" role="tab" aria-selected="false" aria-controls="taxi-day3">Day 3・9/5</button>
+      <button class="taxi-day-tab" id="taxi-tab-day4" type="button" role="tab" aria-selected="false" aria-controls="taxi-day4">Day 4・9/6</button>
+      <button class="taxi-day-tab" id="taxi-tab-day5" type="button" role="tab" aria-selected="false" aria-controls="taxi-day5">Day 5・9/7</button>
+      <button class="taxi-day-tab" id="taxi-tab-day6" type="button" role="tab" aria-selected="false" aria-controls="taxi-day6">Day 6・9/8</button>
+      <button class="taxi-day-tab" id="taxi-tab-day7" type="button" role="tab" aria-selected="false" aria-controls="taxi-day7">Day 7・9/9</button>
+      <button class="taxi-day-tab" id="taxi-tab-day8" type="button" role="tab" aria-selected="false" aria-controls="taxi-day8">Day 8・9/10</button>
     </div>
     <div class="taxi-day-panel" id="taxi-day1" role="tabpanel" aria-labelledby="taxi-tab-day1">
       <div class="taxi-list">
@@ -709,7 +1451,54 @@
     </div>
     <div class="taxi-day-panel" id="taxi-day3" role="tabpanel" aria-labelledby="taxi-tab-day3" hidden>
       <div class="taxi-list">
+        <div class="taxi-row"><div><small>TAOCA COFFEE 神戶元町店</small><strong>TAOCA COFFEE 神戸元町店までお願いします。</strong></div><button class="copy-btn" data-copy="TAOCA COFFEE 神戸元町店までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>南京町東側入口</small><strong>南京町の長安門までお願いします。</strong></div><button class="copy-btn" data-copy="南京町の長安門までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>南京町後先到 JR 三ノ宮站與家人會合</small><strong>JR三ノ宮駅の西口までお願いします。家族と合流します。</strong></div><button class="copy-btn" data-copy="JR三ノ宮駅の西口までお願いします。家族と合流します。">複製</button></div>
+        <div class="taxi-row"><div><small>會合後前往生田神社</small><strong>生田神社の正面入口までお願いします。5人です。</strong></div><button class="copy-btn" data-copy="生田神社の正面入口までお願いします。5人です。">複製</button></div>
+        <div class="taxi-row"><div><small>午餐後回飯店取行李</small><strong>ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。ホテルで荷物を受け取ります。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 神戸三宮までお願いします。ホテルで荷物を受け取ります。">複製</button></div>
+        <div class="taxi-row"><div><small>飯店取行李後前往 JR 三ノ宮站</small><strong>JR三ノ宮駅の西口までお願いします。大きな荷物が5個あります。</strong></div><button class="copy-btn" data-copy="JR三ノ宮駅の西口までお願いします。大きな荷物が5個あります。">複製</button></div>
         <div class="taxi-row"><div><small>Hotel Monterey Himeji</small><strong>ホテルモントレ姫路までお願いします。</strong></div><button class="copy-btn" data-copy="ホテルモントレ姫路までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>請飯店協助叫車（5 人）</small><strong>好古園までタクシーをお願いします。5人です。ジャンボタクシーがなければ、普通車を2台お願いします。</strong></div><button class="copy-btn" data-copy="好古園までタクシーをお願いします。5人です。ジャンボタクシーがなければ、普通車を2台お願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>好古園入口</small><strong>好古園の入口までお願いします。</strong></div><button class="copy-btn" data-copy="好古園の入口までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day4" role="tabpanel" aria-labelledby="taxi-tab-day4" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>姬路城大手門</small><strong>姫路城の大手門前までお願いします。</strong></div><button class="copy-btn" data-copy="姫路城の大手門前までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>返回 Hotel Monterey Himeji</small><strong>ホテルモントレ姫路までお願いします。</strong></div><button class="copy-btn" data-copy="ホテルモントレ姫路までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>緊急備案・前往神戶機場</small><strong>神戸空港までお願いします。国内線は第1ターミナル、国際線は第2ターミナルです。</strong></div><button class="copy-btn" data-copy="神戸空港までお願いします。国内線は第1ターミナル、国際線は第2ターミナルです。">複製</button></div>
+        <div class="taxi-row"><div><small>京都站 → 京都二條飯店（5 人）</small><strong>ザ ロイヤルパーク キャンバス 京都二条までお願いします。5人です。ジャンボタクシーはありますか。なければ普通車を2台お願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 京都二条までお願いします。5人です。ジャンボタクシーはありますか。なければ普通車を2台お願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>二條城東大手門</small><strong>元離宮二条城の東大手門までお願いします。</strong></div><button class="copy-btn" data-copy="元離宮二条城の東大手門までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>本格燒肉 チファジャ 烏丸佛光寺店</small><strong>本格焼肉チファジャ 烏丸仏光寺店までお願いします。</strong></div><button class="copy-btn" data-copy="本格焼肉チファジャ 烏丸仏光寺店までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day5" role="tabpanel" aria-labelledby="taxi-tab-day5" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>京都市清水坂觀光停車場</small><strong>京都市清水坂観光駐車場までお願いします。できるだけ坂の上までお願いします。</strong></div><button class="copy-btn" data-copy="京都市清水坂観光駐車場までお願いします。できるだけ坂の上までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>建仁寺北門</small><strong>建仁寺の北門までお願いします。</strong></div><button class="copy-btn" data-copy="建仁寺の北門までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>ぎをん萬養軒</small><strong>ぎをん萬養軒までお願いします。</strong></div><button class="copy-btn" data-copy="ぎをん萬養軒までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>返回京都二條飯店</small><strong>ザ ロイヤルパーク キャンバス 京都二条までお願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 京都二条までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day6" role="tabpanel" aria-labelledby="taxi-tab-day6" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>萬博記念公園中央口</small><strong>万博記念公園の中央口までお願いします。</strong></div><button class="copy-btn" data-copy="万博記念公園の中央口までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>大阪城御座船碼頭</small><strong>大阪城御座船の乗り場までお願いします。</strong></div><button class="copy-btn" data-copy="大阪城御座船の乗り場までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>黑門市場</small><strong>黒門市場までお願いします。</strong></div><button class="copy-btn" data-copy="黒門市場までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>ふぐ天神 宗右衛門なんば店</small><strong>ふぐ天神 宗右衛門なんば店までお願いします。</strong></div><button class="copy-btn" data-copy="ふぐ天神 宗右衛門なんば店までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day7" role="tabpanel" aria-labelledby="taxi-tab-day7" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>平等院南門</small><strong>平等院の南門までお願いします。</strong></div><button class="copy-btn" data-copy="平等院の南門までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>四條河原町</small><strong>四条河原町までお願いします。</strong></div><button class="copy-btn" data-copy="四条河原町までお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>返回京都二條飯店</small><strong>ザ ロイヤルパーク キャンバス 京都二条までお願いします。</strong></div><button class="copy-btn" data-copy="ザ ロイヤルパーク キャンバス 京都二条までお願いします。">複製</button></div>
+      </div>
+    </div>
+    <div class="taxi-day-panel" id="taxi-day8" role="tabpanel" aria-labelledby="taxi-tab-day8" hidden>
+      <div class="taxi-list">
+        <div class="taxi-row"><div><small>關西機場第一航廈</small><strong>関西国際空港 第1ターミナルまでお願いします。</strong></div><button class="copy-btn" data-copy="関西国際空港 第1ターミナルまでお願いします。">複製</button></div>
+        <div class="taxi-row"><div><small>臨空城 Premium Outlets</small><strong>りんくうプレミアム・アウトレットまでお願いします。</strong></div><button class="copy-btn" data-copy="りんくうプレミアム・アウトレットまでお願いします。">複製</button></div>
       </div>
     </div>
   </section>
